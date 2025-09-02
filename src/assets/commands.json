@@ -1,0 +1,50 @@
+{
+  "moderation": {
+    "icon": "🛡️",
+    "title": "Moderation",
+    "commands": [
+      {
+        "name": "/ban",
+        "description": "Ban a user from the server.",
+        "permission": "Admin"
+      },
+      {
+        "name": "/mute",
+        "description": "Mute a user.",
+        "permission": "Moderator"
+      }
+    ]
+  },
+  "automod": {
+    "icon": "🤖",
+    "title": "Automod",
+    "commands": [
+      {
+        "name": "/automod enable",
+        "description": "Enable automod features.",
+        "permission": "Admin"
+      },
+      {
+        "name": "/automod rules",
+        "description": "Show automod rules.",
+        "permission": "All"
+      }
+    ]
+  },
+  "utility": {
+    "icon": "⚙️",
+    "title": "Utility",
+    "commands": [
+      {
+        "name": "/ping",
+        "description": "Check bot latency.",
+        "permission": "All"
+      },
+      {
+        "name": "/help",
+        "description": "Show help message.",
+        "permission": "All"
+      }
+    ]
+  }
+}

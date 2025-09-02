@@ -1,8 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --navbar-bg: rgba(0, 0, 0, 0.3);
+  --navbar-border: rgba(255, 255, 255, 0.1);
+  --navbar-blur: blur(16px);
+  --navbar-logo-gradient-from: #aac49b;
+  --navbar-logo-gradient-to: #2f3e29;
+  --navbar-btn-bg: rgba(170, 196, 155, 0.2);
+  --navbar-btn-bg-hover: rgba(170, 196, 155, 0.3);
+  --navbar-link: rgba(255, 255, 255, 0.7);
+  --navbar-link-hover: #fff;
+  --navbar-mobile-bg: rgba(0, 0, 0, 0.5);
+
+  --hero-gradient-from: #2f3e29;
+  --hero-gradient-via: #000000;
+  --hero-gradient-to: #000000;
+  --hero-logo-bg: #aac49b;
+  --hero-btn-gradient-from: #aac49b;
+  --hero-btn-gradient-to: #2f3e29;
+  --hero-btn-bg: rgba(255, 255, 255, 0.1);
+  --hero-btn-bg-hover: rgba(255, 255, 255, 0.2);
+  --hero-text: #ededed;
+  --hero-text-muted: rgba(255, 255, 255, 0.7);
 }
 
 @theme inline {
@@ -10,17 +32,70 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --navbar-bg: var(--navbar-bg);
+  --navbar-border: var(--navbar-border);
+  --navbar-blur: var(--navbar-blur);
+  --navbar-logo-gradient-from: var(--navbar-logo-gradient-from);
+  --navbar-logo-gradient-to: var(--navbar-logo-gradient-to);
+  --navbar-btn-bg: var(--navbar-btn-bg);
+  --navbar-btn-bg-hover: var(--navbar-btn-bg-hover);
+  --navbar-link: var(--navbar-link);
+  --navbar-link-hover: var(--navbar-link-hover);
+  --navbar-mobile-bg: var(--navbar-mobile-bg);
+
+  --hero-gradient-from: var(--hero-gradient-from);
+  --hero-gradient-via: var(--hero-gradient-via);
+  --hero-gradient-to: var(--hero-gradient-to);
+  --hero-logo-bg: var(--hero-logo-bg);
+  --hero-btn-gradient-from: var(--hero-btn-gradient-from);
+  --hero-btn-gradient-to: var(--hero-btn-gradient-to);
+  --hero-btn-bg: var(--hero-btn-bg);
+  --hero-btn-bg-hover: var(--hero-btn-bg-hover);
+  --hero-text: var(--hero-text);
+  --hero-text-muted: var(--hero-text-muted);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+:where(.tw-feature-card) {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(170, 196, 155, 0.03) 100%
+  );
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.18);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+:where(.tw-feature-card:hover) {
+  box-shadow: 0 8px 40px 0 rgba(170, 196, 155, 0.15),
+    0 2px 8px 0 rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px) scale(1.025);
+}
+
+:where(.tw-gradient-bg) {
+  background: linear-gradient(135deg, #aac49b 0%, #2f3e29 100%);
+}
+
+::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #232b1e;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  :where(.tw-feature-card) {
+    padding: 1.5rem !important;
+  }
 }

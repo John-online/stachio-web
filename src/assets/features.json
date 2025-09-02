@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Advanced Moderation",
+    "description": "Protect your server with bans, mutes, warnings, strike systems, and real-time filters.",
+    "iconName": "shield",
+    "iconColour": "#2f3e29",
+    "bgGradient": "linear-gradient(to bottom right, #232b1e, #181c16, #10120e)",
+    "iconBgGradient": "linear-gradient(to bottom right, #aac49b 80%, #2f3e29 80%)"
+  },
+  {
+    "title": "Anti-Phishing & Spam",
+    "description": "Detect and block malicious links, spam, and raids automatically.",
+    "iconName": "warning",
+    "iconColour": "#ff5252",
+    "bgGradient": "linear-gradient(to bottom right, #2b2323, #1c1816, #120e0e)",
+    "iconBgGradient": "linear-gradient(to bottom right, #ffb3b3 80%, #ff5252 80%)"
+  },
+  {
+    "title": "Transparency & Logs",
+    "description": "Every action is logged for admins, ensuring full transparency and accountability.",
+    "iconName": "file-drawer",
+    "iconColour": "#527aff",
+    "bgGradient": "linear-gradient(to bottom right, #23282b, #16191c, #0e1012)",
+    "iconBgGradient": "linear-gradient(to bottom right, #b3c6ff 80%, #527aff 80%)"
+  }
+]
