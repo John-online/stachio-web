@@ -22,5 +22,21 @@
     "iconColour": "#527aff",
     "bgGradient": "linear-gradient(to bottom right, #23282b, #16191c, #0e1012)",
     "iconBgGradient": "linear-gradient(to bottom right, #b3c6ff 80%, #527aff 80%)"
+  },
+  {
+    "title": "Watchdog Monitoring",
+    "description": "Stachio's Watchdog scans your server in real-time, automatically detecting suspicious behavior, compromised accounts, and potential threats before they escalate.",
+    "iconName": "search",
+    "iconColour": "#ffa500",
+    "bgGradient": "linear-gradient(to bottom right, #2b281f, #1c1a16, #12100e)",
+    "iconBgGradient": "linear-gradient(to bottom right, #ffd699 80%, #ffa500 80%)"
+  },
+  {
+    "title": "Smart Verification",
+    "description": "Keep your server safe from bots and alt accounts with customizable verification challenges, and role-based onboarding.",
+    "iconName": "lock",
+    "iconColour": "#28a745",
+    "bgGradient": "linear-gradient(to bottom right, #1e2b1e, #161c16, #0e120e)",
+    "iconBgGradient": "linear-gradient(to bottom right, #9be6aa 80%, #28a745 80%)"
   }
 ]
