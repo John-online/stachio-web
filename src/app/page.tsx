@@ -1,6 +1,5 @@
 "use client";
 import { Navbar } from "@/components/navbar";
-import { Loader } from "@/components/loader";
 import Image from "next/image";
 import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import testimonials from "@/assets/testimonials.json";
@@ -14,6 +13,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import Link from "next/link";
+import Footer from "@/components/footer";
 
 type PartnerType = {
   name: string;
@@ -184,7 +184,6 @@ const TestimonialCard = React.memo(function TestimonialCard({
 });
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
   const [showContent, setShowContent] = useState(false);
   const [openCategories, setOpenCategories] = useState<{
     [key: string]: boolean;
@@ -243,10 +242,7 @@ export default function Home() {
 
   useEffect(() => {
     if (checkAllLoaded()) {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-      }, 1000); // Minimum loading time for smooth UX
-      return () => clearTimeout(timer);
+      setShowContent(true);
     }
   }, [loadingProgress, checkAllLoaded]);
 
@@ -444,374 +440,271 @@ export default function Home() {
 
   return (
     <>
-      <Loader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
+      <Navbar />
 
-      <div className={`transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
-        <Navbar />
-
-        <section
-          id="hero"
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]"
-        >
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)] opacity-20"></div>
-          </div>
-          <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-20 py-24">
-            <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-10">
-              <h1 className="text-5xl md:text-7xl font-extrabold text-[var(--hero-text)] leading-tight drop-shadow-lg">
-                Protect Your Server with{" "}
-                <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--hero-btn-gradient-from)] to-[var(--hero-btn-gradient-to)]">
-                  Stachio
-                </span>
-              </h1>
-              <p className="text-2xl md:text-3xl text-[var(--hero-text-muted)] max-w-2xl mx-auto lg:mx-0">
-                The advanced Discord bot built for online safety, automod, and
-                secure community management.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start w-full">
-                <Link
-                  href="/invite"
-                  className="btn-primary"
-                >
-                  Add to Discord
-                </Link>
-                <Link
-                  href="#commands"
-                  className="btn-primary"
-                >
-                  View Commands
-                </Link>
-              </div>
-            </div>
-            <div className="flex-1 flex items-center justify-center relative">
-              <div className="absolute inset-0 w-full h-full bg-[var(--hero-logo-bg)] rounded-3xl blur-3xl opacity-30"></div>
-              <Image
-                src="/images/logo.png"
-                alt="Stachio Bot"
-                className="relative rounded-3xl w-full max-w-md mx-auto"
-                width={400}
-                height={400}
-                priority
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-              />
-            </div>
-          </div>
-        </section>
-
-        <section id="features" className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold mb-4">Features of Stachio</h2>
-            <p className="text-xl text-white/70 mb-20">
-              Everything you need to keep your server safe, secure, and thriving.
+      <section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]"
+      >
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)] opacity-20"></div>
+        </div>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-20 py-24">
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left space-y-10">
+            <h1 className="text-5xl md:text-7xl font-extrabold text-[var(--hero-text)] leading-tight drop-shadow-lg">
+              Protect Your Server with{" "}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-[var(--hero-btn-gradient-from)] to-[var(--hero-btn-gradient-to)]">
+                Stachio
+              </span>
+            </h1>
+            <p className="text-2xl md:text-3xl text-[var(--hero-text-muted)] max-w-2xl mx-auto lg:mx-0">
+              The advanced Discord bot built for online safety, automod, and
+              secure community management.
             </p>
-            <div className="grid md:grid-cols-3 gap-10">
-              {memoizedFeatures.length > 0 &&
-                memoizedFeatures.map((feature, idx) => (
-                  <div
-                    key={feature.title || idx}
-                    className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
-                      }`}
-                    style={{
-                      background: feature.bgGradient || undefined,
-                    }}
-                  >
-                    <div className="flex flex-col items-center px-10 py-12">
-                      <div
-                        className="w-14 h-14 rounded-xl flex items-center justify-center mb-6"
-                        style={{
-                          background: feature.iconBgGradient || undefined,
-                        }}
-                      >
-                        {feature.iconName && lucideIconMap[feature.iconName]
-                          ? React.createElement(lucideIconMap[feature.iconName], {
-                            color: feature.iconColour || "#fff",
-                            size: 28,
-                            strokeWidth: 2.2,
-                          })
-                          : feature.iconEmoji || null}
-                      </div>
-                      <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[#aac49b] transition-colors duration-200">
-                        {feature.title}
-                      </h3>
-                      <p className="text-white/70 text-base">
-                        {feature.description}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+            <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start w-full">
+              <Link
+                href="/invite"
+                className="btn-primary"
+              >
+                Add to Discord
+              </Link>
+              <Link
+                href="#commands"
+                className="btn-primary"
+              >
+                View Commands
+              </Link>
             </div>
           </div>
-        </section>
-
-        <section id="partners" className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold mb-4">Our Partners</h2>
-            <p className="text-xl text-white/70 mb-20">
-              Stachio is proud to collaborate with amazing partners who support
-              online safety.
-            </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {memoizedPartners.length > 0 &&
-                memoizedPartners.map((partner: PartnerType) => (
-                  <PartnerCard key={partner.name} partner={partner} />
-                ))}
-            </div>
+          <div className="flex-1 flex items-center justify-center relative">
+            <div className="absolute inset-0 w-full h-full bg-[var(--hero-logo-bg)] rounded-3xl blur-3xl opacity-30"></div>
+            <Image
+              src="/images/logo.png"
+              alt="Stachio Bot"
+              className="relative rounded-3xl w-full max-w-md mx-auto"
+              width={400}
+              height={400}
+              priority
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+            />
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="commands" className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold mb-4">Commands</h2>
-            <p className="text-xl text-white/70 mb-20">
-              Explore powerful commands designed for safety and moderation.
-            </p>
-            <div className="space-y-8">
-              {Object.keys(memoizedCommands).length > 0 &&
-                Object.entries(memoizedCommands).map(([key, category]) => (
-                  <CommandCategory
-                    key={key}
-                    categoryKey={key}
-                    category={category}
-                    open={!!openCategories[key]}
-                    onToggle={handleToggleCategory}
-                  />
-                ))}
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="testimonials"
-          className="py-32"
-        >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold mb-4">What Our Users Say</h2>
-            <p className="text-xl text-white/70 mb-20">
-              See how Stachio helps communities stay safe and organized.
-            </p>
-            <div
-              className="relative w-full max-w-4xl mx-auto"
-              onTouchStart={handleDragStart}
-              onTouchEnd={handleDragEnd}
-              onMouseDown={handleDragStart}
-              onMouseUp={handleDragEnd}
-              onMouseLeave={() => (dragStartX.current = null)}
-            >
-              <div className="overflow-hidden">
+      <section id="features" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-5xl font-bold mb-4">Features of Stachio</h2>
+          <p className="text-xl text-white/70 mb-20">
+            Everything you need to keep your server safe, secure, and thriving.
+          </p>
+          <div className="grid md:grid-cols-3 gap-10">
+            {memoizedFeatures.length > 0 &&
+              memoizedFeatures.map((feature, idx) => (
                 <div
-                  className="flex transition-transform duration-500 ease-out"
+                  key={feature.title || idx}
+                  className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
+                    }`}
                   style={{
-                    transform: `translateX(-${testimonialIndex * 100}%)`,
+                    background: feature.bgGradient || undefined,
                   }}
                 >
-                  {testimonials.map((testimonial, i) => (
+                  <div className="flex flex-col items-center px-10 py-12">
                     <div
-                      key={i}
-                      className="w-full flex-shrink-0 px-4"
+                      className="w-14 h-14 rounded-xl flex items-center justify-center mb-6"
+                      style={{
+                        background: feature.iconBgGradient || undefined,
+                      }}
                     >
-                      <TestimonialCard
-                        testimonial={testimonial}
-                        isActive={testimonialIndex === i}
-                      />
+                      {feature.iconName && lucideIconMap[feature.iconName]
+                        ? React.createElement(lucideIconMap[feature.iconName], {
+                          color: feature.iconColour || "#fff",
+                          size: 28,
+                          strokeWidth: 2.2,
+                        })
+                        : feature.iconEmoji || null}
                     </div>
-                  ))}
+                    <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[#aac49b] transition-colors duration-200">
+                      {feature.title}
+                    </h3>
+                    <p className="text-white/70 text-base">
+                      {feature.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              ))}
+          </div>
+        </div>
+      </section>
 
-              <div className="flex justify-center gap-3 mt-12">
-                {testimonials.map((_, i) => (
-                  <button
+      <section id="partners" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-5xl font-bold mb-4">Our Partners</h2>
+          <p className="text-xl text-white/70 mb-20">
+            Stachio is proud to collaborate with amazing partners who support
+            online safety.
+          </p>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {memoizedPartners.length > 0 &&
+              memoizedPartners.map((partner: PartnerType) => (
+                <PartnerCard key={partner.name} partner={partner} />
+              ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="commands" className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-5xl font-bold mb-4">Commands</h2>
+          <p className="text-xl text-white/70 mb-20">
+            Explore powerful commands designed for safety and moderation.
+          </p>
+          <div className="space-y-8">
+            {Object.keys(memoizedCommands).length > 0 &&
+              Object.entries(memoizedCommands).map(([key, category]) => (
+                <CommandCategory
+                  key={key}
+                  categoryKey={key}
+                  category={category}
+                  open={!!openCategories[key]}
+                  onToggle={handleToggleCategory}
+                />
+              ))}
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="testimonials"
+        className="py-32"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-5xl font-bold mb-4">What Our Users Say</h2>
+          <p className="text-xl text-white/70 mb-20">
+            See how Stachio helps communities stay safe and organized.
+          </p>
+          <div
+            className="relative w-full max-w-4xl mx-auto"
+            onTouchStart={handleDragStart}
+            onTouchEnd={handleDragEnd}
+            onMouseDown={handleDragStart}
+            onMouseUp={handleDragEnd}
+            onMouseLeave={() => (dragStartX.current = null)}
+          >
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-out"
+                style={{
+                  transform: `translateX(-${testimonialIndex * 100}%)`,
+                }}
+              >
+                {testimonials.map((testimonial, i) => (
+                  <div
                     key={i}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${testimonialIndex === i
-                        ? "bg-[#aac49b] scale-125"
-                        : "bg-white/30 hover:bg-[#aac49b]/60 hover:scale-110"
-                      }`}
-                    aria-label={`Go to testimonial ${i + 1}`}
-                    onClick={() => {
-                      setTestimonialIndex(i);
-                      setTestimonialsPaused(true);
-                      setTimeout(() => setTestimonialsPaused(false), 2000);
-                    }}
-                  />
+                    className="w-full flex-shrink-0 px-4"
+                  >
+                    <TestimonialCard
+                      testimonial={testimonial}
+                      isActive={testimonialIndex === i}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
+
+            <div className="flex justify-center gap-3 mt-12">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${testimonialIndex === i
+                      ? "bg-[#aac49b] scale-125"
+                      : "bg-white/30 hover:bg-[#aac49b]/60 hover:scale-110"
+                    }`}
+                  aria-label={`Go to testimonial ${i + 1}`}
+                  onClick={() => {
+                    setTestimonialIndex(i);
+                    setTestimonialsPaused(true);
+                    setTimeout(() => setTestimonialsPaused(false), 2000);
+                  }}
+                />
+              ))}
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="py-32">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-5xl font-bold mb-4">Connect With Us</h2>
-            <p className="text-xl text-white/70 mb-20">
-              Join our community and contribute to development.
-            </p>
-            <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-              <div className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-all duration-200 bg-white/10 hover:bg-white/15 p-8">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-3xl mb-6">
-                    🐙
-                  </div>
-                  <h3 className="text-2xl font-bold mb-3">Source Code</h3>
-                  <p className="text-white/70 mb-6">
-                    View our open-source code on GitHub and contribute to development
-                  </p>
-                  <div className="flex gap-6 text-white/70 text-sm mb-6">
-                    <span className="flex items-center gap-2">
-                      <span className="text-yellow-400">⭐</span>
-                      <span id="stars-count">{githubStats.stars} Stars</span>
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <span className="text-blue-400">🍴</span>
-                      <span id="forks-count">{githubStats.forks} Forks</span>
-                    </span>
-                  </div>
-                  <Link
-                    href="/github"
-                    className="btn-primary"
-                  >
-                    View Source
-                  </Link>
+      <section className="py-32">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-5xl font-bold mb-4">Connect With Us</h2>
+          <p className="text-xl text-white/70 mb-20">
+            Join our community and contribute to development.
+          </p>
+          <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            <div className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-all duration-200 bg-white/10 hover:bg-white/15 p-8">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-600 rounded-xl flex items-center justify-center text-3xl mb-6">
+                  🐙
                 </div>
-              </div>
-
-              <div className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-all duration-200 bg-white/10 hover:bg-white/15 p-8">
-                <div className="flex flex-col items-center text-center">
-                  <Image
-                    src="/images/logo.png"
-                    alt="Server Icon"
-                    width={64}
-                    height={64}
-                    className="w-16 h-16 rounded-xl border-2 border-white/20 bg-white/10 mb-6"
-                    loading="lazy"
-                  />
-                  <h3 className="text-2xl font-bold mb-3">Stachio Community</h3>
-                  <p className="text-white/70 mb-6">
-                    Join our official Discord server for support and updates
-                  </p>
-                  <div className="flex gap-6 text-white/70 text-sm mb-6">
-                    <span className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                      <span id="discord-online-count">{discordStats.online} Online</span>
-                    </span>
-                    <span className="flex items-center gap-2">
-                      <span className="text-blue-400">👥</span>
-                      <span id="discord-members">{discordStats.members} Members</span>
-                    </span>
-                  </div>
-                  <Link
-                    href="/discord"
-                    className="btn-primary"
-                  >
-                    Join Server
-                  </Link>
+                <h3 className="text-2xl font-bold mb-3">Source Code</h3>
+                <p className="text-white/70 mb-6">
+                  View our open-source code on GitHub and contribute to development
+                </p>
+                <div className="flex gap-6 text-white/70 text-sm mb-6">
+                  <span className="flex items-center gap-2">
+                    <span className="text-yellow-400">⭐</span>
+                    <span id="stars-count">{githubStats.stars} Stars</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="text-blue-400">🍴</span>
+                    <span id="forks-count">{githubStats.forks} Forks</span>
+                  </span>
                 </div>
+                <Link
+                  href="/github"
+                  className="btn-primary"
+                >
+                  View Source
+                </Link>
               </div>
             </div>
-          </div>
-        </section>
 
-        <footer className="text-white py-16 border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-3 gap-12">
-            <div>
-              <Image
-                src="/images/logo.png"
-                alt="Stachio Logo"
-                width={40}
-                height={40}
-                className="h-10 mb-6"
-                loading="lazy"
-              />
-              <p className="text-lg text-white/70">
-                Stachio is the ultimate bot for online safety and community
-                protection, with automod, moderation, anti-phishing, and more.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#hero" className="text-white/70 hover:text-white transition-colors">
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#features" className="text-white/70 hover:text-white transition-colors">
-                    Features
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#commands" className="text-white/70 hover:text-white transition-colors">
-                    Commands
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="#testimonials"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Testimonials
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="privacy"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="terms" className="text-white/70 hover:text-white transition-colors">
-                    Terms of Service
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold mb-4">Follow Us</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link
-                    href="/invite"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Invite
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/discord"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Discord
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/github"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    GitHub
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/support"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
-                    Support Us
-                  </Link>
-                </li>
-              </ul>
+            <div className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-all duration-200 bg-white/10 hover:bg-white/15 p-8">
+              <div className="flex flex-col items-center text-center">
+                <Image
+                  src="/images/logo.png"
+                  alt="Server Icon"
+                  width={64}
+                  height={64}
+                  className="w-16 h-16 rounded-xl border-2 border-white/20 bg-white/10 mb-6"
+                  loading="lazy"
+                />
+                <h3 className="text-2xl font-bold mb-3">Stachio Community</h3>
+                <p className="text-white/70 mb-6">
+                  Join our official Discord server for support and updates
+                </p>
+                <div className="flex gap-6 text-white/70 text-sm mb-6">
+                  <span className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    <span id="discord-online-count">{discordStats.online} Online</span>
+                  </span>
+                  <span className="flex items-center gap-2">
+                    <span className="text-blue-400">👥</span>
+                    <span id="discord-members">{discordStats.members} Members</span>
+                  </span>
+                </div>
+                <Link
+                  href="/discord"
+                  className="btn-primary"
+                >
+                  Join Server
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="mt-12 border-t border-white/20 pt-6 text-center text-sm text-white/50">
-            © {new Date().getFullYear()} Stachio. All rights reserved. • Not
-            affiliated with Discord Inc.
-          </div>
-        </footer>
-      </div>
+        </div>
+      </section>
+
+      <Footer />
     </>
   );
 }

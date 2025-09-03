@@ -7,10 +7,10 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 
 const navLinks = [
-  { href: "#hero", label: "Home" },
-  { href: "#features", label: "Features" },
-  { href: "#commands", label: "Commands" },
-  { href: "#testimonials", label: "Testimonials" },
+  { href: "/", label: "Home" },
+  { href: "/#features", label: "Features" },
+  { href: "/#commands", label: "Commands" },
+  { href: "/#testimonials", label: "Testimonials" },
 ];
 
 const inviteBtn = {
@@ -58,6 +58,8 @@ export function Navbar() {
         window.scrollTo({ top, behavior: "smooth" });
         setMobileMenuOpen(false);
       }
+    } else if (href.startsWith("/")) {
+      setMobileMenuOpen(false);
     }
   };
 
@@ -105,18 +107,32 @@ export function Navbar() {
 
           <div className="hidden md:flex gap-8">
             {navLinks.map((link) => (
-              <motion.a
-                key={link.href}
-                href={link.href}
-                className="navbar-link"
-                style={{ color: "var(--navbar-link)" }}
-                whileHover={{ scale: 1.08 }}
-                whileFocus={{ scale: 1.08 }}
-                whileTap={{ scale: 0.97 }}
-                onClick={e => handleAnchorClick(e, link.href)}
-              >
-                {link.label}
-              </motion.a>
+              <Link key={link.href} href={link.href}>
+                <motion.span
+                  className="navbar-link cursor-pointer"
+                  style={{ color: "var(--navbar-link)" }}
+                  whileHover={{ scale: 1.08 }}
+                  whileFocus={{ scale: 1.08 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={e => {
+                    if (link.href.startsWith("#")) {
+                      e.preventDefault();
+                      const anchorTarget = document.querySelector(link.href);
+                      if (anchorTarget) {
+                        const nav = document.querySelector("nav");
+                        const navHeight = nav ? nav.clientHeight : 0;
+                        const top =
+                          (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                          window.scrollY -
+                          navHeight;
+                        window.scrollTo({ top, behavior: "smooth" });
+                      }
+                    }
+                  }}
+                >
+                  {link.label}
+                </motion.span>
+              </Link>
             ))}
           </div>
 
@@ -157,26 +173,42 @@ export function Navbar() {
               variants={menuVariants}
             >
               {navLinks.map((link) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  className="block navbar-link"
+                <Link key={link.href} href={link.href}>
+                  <motion.span
+                    className="block navbar-link cursor-pointer"
+                    style={{ color: "var(--navbar-link)" }}
+                    onClick={e => {
+                      if (link.href.startsWith("#")) {
+                        e.preventDefault();
+                        const anchorTarget = document.querySelector(link.href);
+                        if (anchorTarget) {
+                          const nav = document.querySelector("nav");
+                          const navHeight = nav ? nav.clientHeight : 0;
+                          const top =
+                            (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                            window.scrollY -
+                            navHeight;
+                          window.scrollTo({ top, behavior: "smooth" });
+                        }
+                      }
+                      setMobileMenuOpen(false);
+                    }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {link.label}
+                  </motion.span>
+                </Link>
+              ))}
+              <Link href={inviteBtn.href}>
+                <motion.span
+                  className="block navbar-link cursor-pointer"
                   style={{ color: "var(--navbar-link)" }}
-                  onClick={e => handleAnchorClick(e, link.href)}
+                  onClick={() => setMobileMenuOpen(false)}
                   whileTap={{ scale: 0.97 }}
                 >
-                  {link.label}
-                </motion.a>
-              ))}
-              <motion.a
-                href={inviteBtn.href}
-                className="block navbar-link"
-                style={{ color: "var(--navbar-link)" }}
-                onClick={() => setMobileMenuOpen(false)}
-                whileTap={{ scale: 0.97 }}
-              >
-                {inviteBtn.label}
-              </motion.a>
+                  {inviteBtn.label}
+                </motion.span>
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>

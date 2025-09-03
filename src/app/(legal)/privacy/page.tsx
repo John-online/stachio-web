@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/navbar";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import Footer from "@/components/footer";
 
 const ReactMarkdown = dynamic(() => import("react-markdown"), { ssr: false });
 
@@ -60,6 +61,8 @@ export default function PrivacyPage() {
                     </div>
                 </div>
             </section>
+
+            <Footer />
         </div>
     );
 }
