@@ -2,7 +2,13 @@
 import { Navbar } from "@/components/navbar";
 import { Loader } from "@/components/loader";
 import Image from "next/image";
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import testimonials from "@/assets/testimonials.json";
 import {
   Shield,
@@ -12,6 +18,8 @@ import {
   FileStack,
   FileText,
   ChevronDown,
+  Search,
+  Lock,
 } from "lucide-react";
 
 type PartnerType = {
@@ -22,27 +30,38 @@ type PartnerType = {
   cta?: string;
 };
 
-const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: PartnerType }) {
+const PartnerCard = React.memo(function PartnerCard({
+  partner,
+}: {
+  partner: PartnerType;
+}) {
   const [imageError, setImageError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" }
     );
-    
+
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
-  
+
   if (!isVisible) {
-    return <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl bg-white/10 p-6 flex flex-col items-center text-center h-64" />;
+    return (
+      <div
+        ref={ref}
+        className="feature-card rounded-2xl border border-white/10 shadow-xl bg-white/10 p-6 flex flex-col items-center text-center h-64"
+      />
+    );
   }
-  
+
   return (
-    <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-transform duration-200 bg-white/10 hover:bg-white/15 p-6 flex flex-col items-center text-center">
+    <div
+      ref={ref}
+      className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-transform duration-200 bg-white/10 hover:bg-white/15 p-6 flex flex-col items-center text-center">
       <Image
         src={imageError ? "/images/logo.png" : partner.logo}
         alt={partner.name}
@@ -60,8 +79,7 @@ const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: Part
         href={partner.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="btn-primary"
-      >
+        className="btn-primary">
         {partner.cta || "Join Discord"}
       </a>
     </div>
@@ -96,15 +114,13 @@ const CommandCategory = React.memo(function CommandCategory({
   return (
     <div
       className="rounded-2xl border border-white/10 shadow-lg bg-[#181c17] hover:border-[#aac49b]/40 transition-colors duration-200"
-      id={`${categoryKey}-container`}
-    >
+      id={`${categoryKey}-container`}>
       <button
         className="w-full px-8 py-6 flex justify-between items-center text-2xl font-semibold bg-transparent hover:bg-[#232e1e]/40 rounded-t-2xl transition-colors duration-200"
         onClick={handleToggle}
         aria-expanded={open}
         aria-controls={`${categoryKey}-commands`}
-        type="button"
-      >
+        type="button">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-[#232e1e] rounded-lg flex items-center justify-center text-2xl text-[#aac49b]">
             {category.icon}
@@ -119,13 +135,11 @@ const CommandCategory = React.memo(function CommandCategory({
       </button>
       <div
         className={`${open ? "" : "hidden"} px-8 pb-6 space-y-4`}
-        id={`${categoryKey}-commands`}
-      >
+        id={`${categoryKey}-commands`}>
         {category.commands.map((cmd) => (
           <div
             key={cmd.name}
-            className="flex items-center gap-6 bg-[#20251f] border border-white/10 rounded-xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#aac49b]/40 transition-all duration-200 group"
-          >
+            className="flex items-center gap-6 bg-[#20251f] border border-white/10 rounded-xl px-6 py-5 shadow-sm hover:shadow-md hover:border-[#aac49b]/40 transition-all duration-200 group">
             <div className="flex-shrink-0">
               <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-[#232e1e] text-white text-2xl font-bold border border-white/10">
                 /
@@ -157,12 +171,15 @@ const TestimonialCard = React.memo(function TestimonialCard({
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div 
+    <div
       className={`feature-card rounded-2xl border border-white/10 shadow-xl transition-all duration-500 bg-white/10 p-8 w-full max-w-2xl mx-auto ${
-        isActive ? 'opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15' : 'opacity-60 scale-95'
-      }`}
-    >
-      <p className="text-white/90 text-lg mb-6 leading-relaxed">{testimonial.text}</p>
+        isActive
+          ? "opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15"
+          : "opacity-60 scale-95"
+      }`}>
+      <p className="text-white/90 text-lg mb-6 leading-relaxed">
+        {testimonial.text}
+      </p>
       <div className="flex items-center gap-4">
         <Image
           src={imageError ? "/images/logo.png" : testimonial.user.avatar}
@@ -176,7 +193,9 @@ const TestimonialCard = React.memo(function TestimonialCard({
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
         />
         <div className="text-left">
-          <h4 className="text-xl font-bold text-white">{testimonial.user.name}</h4>
+          <h4 className="text-xl font-bold text-white">
+            {testimonial.user.name}
+          </h4>
           <p className="text-sm text-white/70">{testimonial.user.role}</p>
         </div>
       </div>
@@ -234,9 +253,12 @@ export default function Home() {
     setOpenCategories((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
 
-  const updateLoadingProgress = useCallback((key: keyof typeof loadingProgress, value: boolean) => {
-    setLoadingProgress(prev => ({ ...prev, [key]: value }));
-  }, []);
+  const updateLoadingProgress = useCallback(
+    (key: keyof typeof loadingProgress, value: boolean) => {
+      setLoadingProgress((prev) => ({ ...prev, [key]: value }));
+    },
+    []
+  );
 
   const checkAllLoaded = useCallback(() => {
     return Object.values(loadingProgress).every(Boolean);
@@ -262,7 +284,7 @@ export default function Home() {
         forks: data.forks_count,
       });
     } catch {}
-    updateLoadingProgress('githubStats', true);
+    updateLoadingProgress("githubStats", true);
   }, [updateLoadingProgress]);
 
   const fetchDiscordStats = useCallback(async () => {
@@ -276,7 +298,7 @@ export default function Home() {
         members: data.members.length,
       });
     } catch {}
-    updateLoadingProgress('discordStats', true);
+    updateLoadingProgress("discordStats", true);
   }, [updateLoadingProgress]);
 
   useEffect(() => {
@@ -295,41 +317,41 @@ export default function Home() {
     Promise.all([
       import("@/assets/features.json"),
       import("@/assets/partners.json"),
-      import("@/assets/commands.json")
+      import("@/assets/commands.json"),
     ]).then(([featuresModule, partnersModule, commandsModule]) => {
       setFeatures(featuresModule.default || []);
-      updateLoadingProgress('features', true);
-      
+      updateLoadingProgress("features", true);
+
       setPartners(partnersModule.default || []);
-      updateLoadingProgress('partners', true);
-      
+      updateLoadingProgress("partners", true);
+
       setCommands(commandsModule.default || {});
-      updateLoadingProgress('commands', true);
+      updateLoadingProgress("commands", true);
     });
   }, [updateLoadingProgress]);
 
   // Preload critical images
   useEffect(() => {
     const imagesToPreload = [
-      '/images/logo.png',
-      ...partners.map(p => p.logo),
-      ...testimonials.map(t => t.user.avatar)
+      "/images/logo.png",
+      ...partners.map((p) => p.logo),
+      ...testimonials.map((t) => t.user.avatar),
     ];
 
     let loadedCount = 0;
     const totalImages = imagesToPreload.length;
 
     if (totalImages === 0) {
-      updateLoadingProgress('images', true);
+      updateLoadingProgress("images", true);
       return;
     }
 
-    imagesToPreload.forEach(src => {
+    imagesToPreload.forEach((src) => {
       const img = new window.Image();
       img.onload = img.onerror = () => {
         loadedCount++;
         if (loadedCount === totalImages) {
-          updateLoadingProgress('images', true);
+          updateLoadingProgress("images", true);
         }
       };
       img.src = src;
@@ -341,15 +363,17 @@ export default function Home() {
 
   const throttledScrollHandler = useCallback(() => {
     if (!isScrolling) setIsScrolling(true);
-    
+
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => setIsScrolling(false), 150);
   }, [isScrolling]);
 
   useEffect(() => {
-    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    window.addEventListener("scroll", throttledScrollHandler, {
+      passive: true,
+    });
     return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
+      window.removeEventListener("scroll", throttledScrollHandler);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
   }, [throttledScrollHandler]);
@@ -374,10 +398,10 @@ export default function Home() {
           (anchorTarget as HTMLElement).getBoundingClientRect().top +
           window.scrollY -
           navHeight;
-        
+
         window.scrollTo({
           top,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -405,39 +429,50 @@ export default function Home() {
   }, [testimonialIndex, testimonialCount, testimonialsPaused]);
 
   const dragStartX = useRef<number | null>(null);
-  const handleDragStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    setTestimonialsPaused(true);
-    dragStartX.current =
-      "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
-  }, []);
+  const handleDragStart = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      setTestimonialsPaused(true);
+      dragStartX.current =
+        "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    },
+    []
+  );
 
-  const handleDragEnd = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (dragStartX.current === null) return;
-    const endX =
-      "changedTouches" in e
-        ? e.changedTouches[0].clientX
-        : (e as React.MouseEvent).clientX;
-    const diff = endX - dragStartX.current;
-    if (Math.abs(diff) > 50) {
-      setTestimonialIndex((prev) =>
-        diff > 0
-          ? (prev - 1 + testimonialCount) % testimonialCount
-          : (prev + 1) % testimonialCount
-      );
-    }
-    dragStartX.current = null;
-    setTimeout(() => setTestimonialsPaused(false), 1000);
-  }, [testimonialCount]);
+  const handleDragEnd = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      if (dragStartX.current === null) return;
+      const endX =
+        "changedTouches" in e
+          ? e.changedTouches[0].clientX
+          : (e as React.MouseEvent).clientX;
+      const diff = endX - dragStartX.current;
+      if (Math.abs(diff) > 50) {
+        setTestimonialIndex((prev) =>
+          diff > 0
+            ? (prev - 1 + testimonialCount) % testimonialCount
+            : (prev + 1) % testimonialCount
+        );
+      }
+      dragStartX.current = null;
+      setTimeout(() => setTestimonialsPaused(false), 1000);
+    },
+    [testimonialCount]
+  );
 
-  const lucideIconMap: Record<string, React.ElementType> = useMemo(() => ({
-    shield: Shield,
-    warning: AlertTriangle,
-    "file-drawer": Archive,
-    archive: Archive,
-    "file-archive": FileArchive,
-    "file-stack": FileStack,
-    "file-text": FileText,
-  }), []);
+  const lucideIconMap: Record<string, React.ElementType> = useMemo(
+    () => ({
+      search: Search,
+      lock: Lock,
+      shield: Shield,
+      warning: AlertTriangle,
+      "file-drawer": Archive,
+      archive: Archive,
+      "file-archive": FileArchive,
+      "file-stack": FileStack,
+      "file-text": FileText,
+    }),
+    []
+  );
 
   const handleLoadingComplete = useCallback(() => {
     setShowContent(true);
@@ -446,14 +481,16 @@ export default function Home() {
   return (
     <>
       <Loader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
-      
-      <div className={`transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
+
+      <div
+        className={`transition-opacity duration-500 ${
+          showContent ? "opacity-100" : "opacity-0"
+        }`}>
         <Navbar />
 
         <section
           id="hero"
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]"
-        >
+          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]">
           <div className="absolute inset-0 pointer-events-none z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)] opacity-20"></div>
           </div>
@@ -470,16 +507,10 @@ export default function Home() {
                 secure community management.
               </p>
               <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start w-full">
-                <a
-                  href="/invite"
-                  className="btn-primary"
-                >
+                <a href="/invite" className="btn-primary">
                   Add to Discord
                 </a>
-                <a
-                  href="#commands"
-                  className="btn-primary"
-                >
+                <a href="#commands" className="btn-primary">
                   View Commands
                 </a>
               </div>
@@ -504,7 +535,8 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-5xl font-bold mb-4">Features of Stachio</h2>
             <p className="text-xl text-white/70 mb-20">
-              Everything you need to keep your server safe, secure, and thriving.
+              Everything you need to keep your server safe, secure, and
+              thriving.
             </p>
             <div className="grid md:grid-cols-3 gap-10">
               {memoizedFeatures.length > 0 &&
@@ -512,25 +544,26 @@ export default function Home() {
                   <div
                     key={feature.title || idx}
                     className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${
-                      isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
+                      isScrolling ? "" : "hover:scale-[1.01] hover:shadow-lg"
                     }`}
                     style={{
                       background: feature.bgGradient || undefined,
-                    }}
-                  >
+                    }}>
                     <div className="flex flex-col items-center px-10 py-12">
                       <div
                         className="w-14 h-14 rounded-xl flex items-center justify-center mb-6"
                         style={{
                           background: feature.iconBgGradient || undefined,
-                        }}
-                      >
+                        }}>
                         {feature.iconName && lucideIconMap[feature.iconName]
-                          ? React.createElement(lucideIconMap[feature.iconName], {
-                              color: feature.iconColour || "#fff",
-                              size: 28,
-                              strokeWidth: 2.2,
-                            })
+                          ? React.createElement(
+                              lucideIconMap[feature.iconName],
+                              {
+                                color: feature.iconColour || "#fff",
+                                size: 28,
+                                strokeWidth: 2.2,
+                              }
+                            )
                           : feature.iconEmoji || null}
                       </div>
                       <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[#aac49b] transition-colors duration-200">
@@ -583,10 +616,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section
-          id="testimonials"
-          className="py-32"
-        >
+        <section id="testimonials" className="py-32">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-5xl font-bold mb-4">What Our Users Say</h2>
             <p className="text-xl text-white/70 mb-20">
@@ -598,23 +628,18 @@ export default function Home() {
               onTouchEnd={handleDragEnd}
               onMouseDown={handleDragStart}
               onMouseUp={handleDragEnd}
-              onMouseLeave={() => (dragStartX.current = null)}
-            >
+              onMouseLeave={() => (dragStartX.current = null)}>
               <div className="overflow-hidden">
-                <div 
+                <div
                   className="flex transition-transform duration-500 ease-out"
-                  style={{ 
+                  style={{
                     transform: `translateX(-${testimonialIndex * 100}%)`,
-                  }}
-                >
+                  }}>
                   {testimonials.map((testimonial, i) => (
-                    <div
-                      key={i}
-                      className="w-full flex-shrink-0 px-4"
-                    >
-                      <TestimonialCard 
-                        testimonial={testimonial} 
-                        isActive={testimonialIndex === i} 
+                    <div key={i} className="w-full flex-shrink-0 px-4">
+                      <TestimonialCard
+                        testimonial={testimonial}
+                        isActive={testimonialIndex === i}
                       />
                     </div>
                   ))}
@@ -657,7 +682,8 @@ export default function Home() {
                   </div>
                   <h3 className="text-2xl font-bold mb-3">Source Code</h3>
                   <p className="text-white/70 mb-6">
-                    View our open-source code on GitHub and contribute to development
+                    View our open-source code on GitHub and contribute to
+                    development
                   </p>
                   <div className="flex gap-6 text-white/70 text-sm mb-6">
                     <span className="flex items-center gap-2">
@@ -669,10 +695,7 @@ export default function Home() {
                       <span id="forks-count">{githubStats.forks} Forks</span>
                     </span>
                   </div>
-                  <a
-                    href="/github"
-                    className="btn-primary"
-                  >
+                  <a href="/github" className="btn-primary">
                     View Source
                   </a>
                 </div>
@@ -695,17 +718,18 @@ export default function Home() {
                   <div className="flex gap-6 text-white/70 text-sm mb-6">
                     <span className="flex items-center gap-2">
                       <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                      <span id="discord-online-count">{discordStats.online} Online</span>
+                      <span id="discord-online-count">
+                        {discordStats.online} Online
+                      </span>
                     </span>
                     <span className="flex items-center gap-2">
                       <span className="text-blue-400">👥</span>
-                      <span id="discord-members">{discordStats.members} Members</span>
+                      <span id="discord-members">
+                        {discordStats.members} Members
+                      </span>
                     </span>
                   </div>
-                  <a
-                    href="/discord"
-                    className="btn-primary"
-                  >
+                  <a href="/discord" className="btn-primary">
                     Join Server
                   </a>
                 </div>
@@ -734,38 +758,44 @@ export default function Home() {
               <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#hero" className="text-white/70 hover:text-white transition-colors">
+                  <a
+                    href="#hero"
+                    className="text-white/70 hover:text-white transition-colors">
                     Home
                   </a>
                 </li>
                 <li>
-                  <a href="#features" className="text-white/70 hover:text-white transition-colors">
+                  <a
+                    href="#features"
+                    className="text-white/70 hover:text-white transition-colors">
                     Features
                   </a>
                 </li>
                 <li>
-                  <a href="#commands" className="text-white/70 hover:text-white transition-colors">
+                  <a
+                    href="#commands"
+                    className="text-white/70 hover:text-white transition-colors">
                     Commands
                   </a>
                 </li>
                 <li>
                   <a
                     href="#testimonials"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     Testimonials
                   </a>
                 </li>
                 <li>
                   <a
                     href="privacy.html"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     Privacy Policy
                   </a>
                 </li>
                 <li>
-                  <a href="terms.html" className="text-white/70 hover:text-white transition-colors">
+                  <a
+                    href="terms.html"
+                    className="text-white/70 hover:text-white transition-colors">
                     Terms of Service
                   </a>
                 </li>
@@ -777,32 +807,28 @@ export default function Home() {
                 <li>
                   <a
                     href="/invite"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     Invite
                   </a>
                 </li>
                 <li>
                   <a
                     href="/discord"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     Discord
                   </a>
                 </li>
                 <li>
                   <a
                     href="/github"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     GitHub
                   </a>
                 </li>
                 <li>
                   <a
                     href="/support"
-                    className="text-white/70 hover:text-white transition-colors"
-                  >
+                    className="text-white/70 hover:text-white transition-colors">
                     Support Us
                   </a>
                 </li>
