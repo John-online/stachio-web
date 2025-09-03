@@ -63,15 +63,15 @@ body {
 }
 
 :where(.tw-feature-card) {
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.02) 0%,
-    rgba(170, 196, 155, 0.03) 100%
-  );
+  background: linear-gradient(120deg,
+      rgba(255, 255, 255, 0.02) 0%,
+      rgba(170, 196, 155, 0.03) 100%);
   border-radius: 1.25rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.18);
   transition: box-shadow 0.2s, transform 0.2s;
+  will-change: transform;
+  contain: layout style paint;
 }
 
 :where(.tw-feature-card:hover) {
@@ -89,6 +89,7 @@ body {
   width: 8px;
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #232b1e;
   border-radius: 8px;
@@ -97,5 +98,44 @@ body {
 @media (max-width: 768px) {
   :where(.tw-feature-card) {
     padding: 1.5rem !important;
+  }
+}
+
+.btn-primary {
+  background: #181c17;
+  color: #e6e6e6;
+  border: 1px solid #232e1e;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  outline: none;
+  box-shadow: none;
+  line-height: 1.2;
+  min-width: 0;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #232e1e;
+  color: #aac49b;
+  border-color: #aac49b;
+  transform: translateY(-1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .btn-primary:hover {
+    transform: none;
+  }
+
+  .feature-card:hover {
+    transform: none;
   }
 }

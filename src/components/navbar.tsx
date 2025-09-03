@@ -104,15 +104,7 @@ export function Navbar() {
 
           <a href={inviteBtn.href} className="hidden md:block">
             <motion.button
-              className="px-6 py-2 rounded-lg transition-all"
-              style={{
-                background: "var(--navbar-btn-bg)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              whileHover={{
-                scale: 1.05,
-                background: "var(--navbar-btn-bg-hover)",
-              }}
+              className="btn-primary cursor-pointer"
             >
               {inviteBtn.label}
             </motion.button>
