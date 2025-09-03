@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react"; // Import Lucide icons
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
 
-// Navigation links data
 const navLinks = [
   { href: "#hero", label: "Home" },
   { href: "#features", label: "Features" },
@@ -44,6 +44,23 @@ export function Navbar() {
     setMobileMenuOpen((open) => !open);
   };
 
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      const anchorTarget = document.querySelector(href);
+      if (anchorTarget) {
+        const nav = document.querySelector("nav");
+        const navHeight = nav ? nav.clientHeight : 0;
+        const top =
+          (anchorTarget as HTMLElement).getBoundingClientRect().top +
+          window.scrollY -
+          navHeight;
+        window.scrollTo({ top, behavior: "smooth" });
+        setMobileMenuOpen(false);
+      }
+    }
+  };
+
   return (
     <motion.nav
       className="fixed w-full top-0 z-50 border-b backdrop-blur-md"
@@ -58,7 +75,7 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <a href="#hero" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -84,7 +101,7 @@ export function Navbar() {
             >
               Stachio
             </motion.span>
-          </a>
+          </Link>
 
           <div className="hidden md:flex gap-8">
             {navLinks.map((link) => (
@@ -96,19 +113,20 @@ export function Navbar() {
                 whileHover={{ scale: 1.08 }}
                 whileFocus={{ scale: 1.08 }}
                 whileTap={{ scale: 0.97 }}
+                onClick={e => handleAnchorClick(e, link.href)}
               >
                 {link.label}
               </motion.a>
             ))}
           </div>
 
-          <a href={inviteBtn.href} className="hidden md:block">
+          <Link href={inviteBtn.href} className="hidden md:block">
             <motion.button
               className="btn-primary cursor-pointer"
             >
               {inviteBtn.label}
             </motion.button>
-          </a>
+          </Link>
 
           <motion.button
             onClick={handleMobileMenuToggle}
@@ -144,7 +162,7 @@ export function Navbar() {
                   href={link.href}
                   className="block navbar-link"
                   style={{ color: "var(--navbar-link)" }}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={e => handleAnchorClick(e, link.href)}
                   whileTap={{ scale: 0.97 }}
                 >
                   {link.label}

@@ -13,6 +13,7 @@ import {
   FileText,
   ChevronDown,
 } from "lucide-react";
+import Link from "next/link";
 
 type PartnerType = {
   name: string;
@@ -26,21 +27,21 @@ const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: Part
   const [imageError, setImageError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
       { threshold: 0.1, rootMargin: '50px' }
     );
-    
+
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
-  
+
   if (!isVisible) {
     return <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl bg-white/10 p-6 flex flex-col items-center text-center h-64" />;
   }
-  
+
   return (
     <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-transform duration-200 bg-white/10 hover:bg-white/15 p-6 flex flex-col items-center text-center">
       <Image
@@ -56,14 +57,14 @@ const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: Part
       />
       <h4 className="text-xl font-bold mb-2">{partner.name}</h4>
       <p className="text-white/70 mb-4">{partner.description}</p>
-      <a
+      <Link
         href={partner.url}
         target="_blank"
         rel="noopener noreferrer"
         className="btn-primary"
       >
         {partner.cta || "Join Discord"}
-      </a>
+      </Link>
     </div>
   );
 });
@@ -112,9 +113,8 @@ const CommandCategory = React.memo(function CommandCategory({
           <span className="text-white">{category.title}</span>
         </div>
         <ChevronDown
-          className={`w-6 h-6 text-white/70 transform transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
+          className={`w-6 h-6 text-white/70 transform transition-transform duration-200 ${open ? "rotate-180" : ""
+            }`}
         />
       </button>
       <div
@@ -157,10 +157,9 @@ const TestimonialCard = React.memo(function TestimonialCard({
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div 
-      className={`feature-card rounded-2xl border border-white/10 shadow-xl transition-all duration-500 bg-white/10 p-8 w-full max-w-2xl mx-auto ${
-        isActive ? 'opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15' : 'opacity-60 scale-95'
-      }`}
+    <div
+      className={`feature-card rounded-2xl border border-white/10 shadow-xl transition-all duration-500 bg-white/10 p-8 w-full max-w-2xl mx-auto ${isActive ? 'opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15' : 'opacity-60 scale-95'
+        }`}
     >
       <p className="text-white/90 text-lg mb-6 leading-relaxed">{testimonial.text}</p>
       <div className="flex items-center gap-4">
@@ -261,7 +260,7 @@ export default function Home() {
         stars: data.stargazers_count,
         forks: data.forks_count,
       });
-    } catch {}
+    } catch { }
     updateLoadingProgress('githubStats', true);
   }, [updateLoadingProgress]);
 
@@ -275,7 +274,7 @@ export default function Home() {
         online: data.presence_count,
         members: data.members.length,
       });
-    } catch {}
+    } catch { }
     updateLoadingProgress('discordStats', true);
   }, [updateLoadingProgress]);
 
@@ -299,10 +298,10 @@ export default function Home() {
     ]).then(([featuresModule, partnersModule, commandsModule]) => {
       setFeatures(featuresModule.default || []);
       updateLoadingProgress('features', true);
-      
+
       setPartners(partnersModule.default || []);
       updateLoadingProgress('partners', true);
-      
+
       setCommands(commandsModule.default || {});
       updateLoadingProgress('commands', true);
     });
@@ -341,7 +340,7 @@ export default function Home() {
 
   const throttledScrollHandler = useCallback(() => {
     if (!isScrolling) setIsScrolling(true);
-    
+
     if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     scrollTimeout.current = setTimeout(() => setIsScrolling(false), 150);
   }, [isScrolling]);
@@ -374,7 +373,7 @@ export default function Home() {
           (anchorTarget as HTMLElement).getBoundingClientRect().top +
           window.scrollY -
           navHeight;
-        
+
         window.scrollTo({
           top,
           behavior: 'smooth'
@@ -446,7 +445,7 @@ export default function Home() {
   return (
     <>
       <Loader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
-      
+
       <div className={`transition-opacity duration-500 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
         <Navbar />
 
@@ -470,18 +469,18 @@ export default function Home() {
                 secure community management.
               </p>
               <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start w-full">
-                <a
+                <Link
                   href="/invite"
                   className="btn-primary"
                 >
                   Add to Discord
-                </a>
-                <a
+                </Link>
+                <Link
                   href="#commands"
                   className="btn-primary"
                 >
                   View Commands
-                </a>
+                </Link>
               </div>
             </div>
             <div className="flex-1 flex items-center justify-center relative">
@@ -511,9 +510,8 @@ export default function Home() {
                 memoizedFeatures.map((feature, idx) => (
                   <div
                     key={feature.title || idx}
-                    className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${
-                      isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
-                    }`}
+                    className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
+                      }`}
                     style={{
                       background: feature.bgGradient || undefined,
                     }}
@@ -527,10 +525,10 @@ export default function Home() {
                       >
                         {feature.iconName && lucideIconMap[feature.iconName]
                           ? React.createElement(lucideIconMap[feature.iconName], {
-                              color: feature.iconColour || "#fff",
-                              size: 28,
-                              strokeWidth: 2.2,
-                            })
+                            color: feature.iconColour || "#fff",
+                            size: 28,
+                            strokeWidth: 2.2,
+                          })
                           : feature.iconEmoji || null}
                       </div>
                       <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[#aac49b] transition-colors duration-200">
@@ -601,9 +599,9 @@ export default function Home() {
               onMouseLeave={() => (dragStartX.current = null)}
             >
               <div className="overflow-hidden">
-                <div 
+                <div
                   className="flex transition-transform duration-500 ease-out"
-                  style={{ 
+                  style={{
                     transform: `translateX(-${testimonialIndex * 100}%)`,
                   }}
                 >
@@ -612,9 +610,9 @@ export default function Home() {
                       key={i}
                       className="w-full flex-shrink-0 px-4"
                     >
-                      <TestimonialCard 
-                        testimonial={testimonial} 
-                        isActive={testimonialIndex === i} 
+                      <TestimonialCard
+                        testimonial={testimonial}
+                        isActive={testimonialIndex === i}
                       />
                     </div>
                   ))}
@@ -625,11 +623,10 @@ export default function Home() {
                 {testimonials.map((_, i) => (
                   <button
                     key={i}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                      testimonialIndex === i
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${testimonialIndex === i
                         ? "bg-[#aac49b] scale-125"
                         : "bg-white/30 hover:bg-[#aac49b]/60 hover:scale-110"
-                    }`}
+                      }`}
                     aria-label={`Go to testimonial ${i + 1}`}
                     onClick={() => {
                       setTestimonialIndex(i);
@@ -669,12 +666,12 @@ export default function Home() {
                       <span id="forks-count">{githubStats.forks} Forks</span>
                     </span>
                   </div>
-                  <a
+                  <Link
                     href="/github"
                     className="btn-primary"
                   >
                     View Source
-                  </a>
+                  </Link>
                 </div>
               </div>
 
@@ -702,12 +699,12 @@ export default function Home() {
                       <span id="discord-members">{discordStats.members} Members</span>
                     </span>
                   </div>
-                  <a
+                  <Link
                     href="/discord"
                     className="btn-primary"
                   >
                     Join Server
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -734,40 +731,40 @@ export default function Home() {
               <h4 className="text-xl font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-2">
                 <li>
-                  <a href="#hero" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="#hero" className="text-white/70 hover:text-white transition-colors">
                     Home
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#features" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="#features" className="text-white/70 hover:text-white transition-colors">
                     Features
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#commands" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="#commands" className="text-white/70 hover:text-white transition-colors">
                     Commands
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="#testimonials"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Testimonials
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
-                    href="privacy.html"
+                  <Link
+                    href="privacy"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="terms.html" className="text-white/70 hover:text-white transition-colors">
+                  <Link href="terms" className="text-white/70 hover:text-white transition-colors">
                     Terms of Service
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -775,36 +772,36 @@ export default function Home() {
               <h4 className="text-xl font-semibold mb-4">Follow Us</h4>
               <ul className="space-y-2">
                 <li>
-                  <a
+                  <Link
                     href="/invite"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Invite
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="/discord"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Discord
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="/github"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     GitHub
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     href="/support"
                     className="text-white/70 hover:text-white transition-colors"
                   >
                     Support Us
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

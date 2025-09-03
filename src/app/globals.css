@@ -139,3 +139,35 @@ body {
     transform: none;
   }
 }
+
+.prose {
+  color: var(--foreground);
+  max-width: 100%;
+}
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: #fff;
+  font-weight: bold;
+}
+.prose p {
+  color: #ededed;
+}
+.prose a {
+  color: #aac49b;
+  text-decoration: underline;
+}
+.prose ul, .prose ol {
+  padding-left: 1.5em;
+}
+.prose li {
+  margin-bottom: 0.5em;
+}
+.prose strong {
+  color: #aac49b;
+}
+.prose code {
+  background: #232e1e;
+  color: #aac49b;
+  padding: 0.2em 0.4em;
+  border-radius: 0.3em;
+  font-size: 0.95em;
+}
