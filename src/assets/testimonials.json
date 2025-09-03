@@ -1,122 +1,18 @@
 [
   {
-    "text": "Stachio has made moderation so much easier for our community. The anti-phishing features are a lifesaver!",
+    "text": "Stachio has made moderation so much easier for our community. The anti-phishing and watchdog features are a lifesaver!",
     "user": {
-      "name": "Alex Johnson",
+      "name": "sarahlfc",
       "role": "Server Owner",
-      "avatar": "/images/testimonials/alex.png"
+      "avatar": "/images/testimonials/sarahlfc.png"
     }
   },
   {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
+    "text": "We love the transparency logs and automod system. Our server has never been safer.",
     "user": {
       "name": "Maria Chen",
       "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
-    }
-  },
-  {
-    "text": "We love the transparency logs and the automod system. Our server has never been safer.",
-    "user": {
-      "name": "Maria Chen",
-      "role": "Community Manager",
-      "avatar": "/images/testimonials/maria.png"
+      "avatar": "/images/testimonials/logo.png"
     }
   },
   {
@@ -124,7 +20,7 @@
     "user": {
       "name": "Samir Patel",
       "role": "Moderator",
-      "avatar": "/images/testimonials/samir.png"
+      "avatar": "/images/testimonials/logo.png"
     }
   }
 ]
