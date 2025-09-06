@@ -2,5 +2,6 @@
     "/invite": "https://discord.com/oauth2/authorize?client_id=1374870746006032414",
     "/github": "https://github.com/MilkshakeCollective/stachio-bot",
     "/discord": "https://discord.gg/Pw4DSNPTt2",
-    "/support": "https://ko-fi.com/duckodas"
+    "/support": "https://ko-fi.com/duckodas",
+    "/donate": "https://ko-fi.com/duckodas"
 }
