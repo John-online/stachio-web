@@ -1,33 +1,94 @@
 {
-  "moderation": {
-    "icon": "🛡️",
-    "title": "Moderation",
+  "watchdog": {
+    "icon": "🐶",
+    "title": "Watchdog",
     "commands": [
       {
-        "name": "ban",
-        "description": "Ban a user from the server.",
-        "permission": "Admin"
+        "name": "watchdog setup",
+        "description": "Configure Watchdog settings",
+        "permission": "ManageGuild"
       },
       {
-        "name": "mute",
-        "description": "Mute a user.",
-        "permission": "Moderator"
+        "name": "watchdog settings",
+        "description": "View current Watchdog settings",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "watchdog toggle",
+        "description": "Enable or disable Watchdog",
+        "permission": "ManageGuild"
       }
     ]
   },
-  "automod": {
-    "icon": "🤖",
-    "title": "Automod",
+  "verification": {
+    "icon": "✅",
+    "title": "Verification",
     "commands": [
       {
-        "name": "automod enable",
-        "description": "Enable automod features.",
-        "permission": "Admin"
+        "name": "verification setup",
+        "description": "Set up (or re-render) the verification message in a channel",
+        "permission": "ManageGuild"
       },
       {
-        "name": "automod rules",
-        "description": "Show automod rules.",
-        "permission": "All"
+        "name": "verification set-emoji-style",
+        "description": "Set the emoji style for your verification message",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification log",
+        "description": "View or change the verification log channel",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification roles",
+        "description": "View, add or remove verification roles",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification kick-on-fail",
+        "description": "Enable or disable kicking users after max verification failures",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification limits",
+        "description": "Set timeout (seconds) and max attempts",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification regenerate",
+        "description": "Regenerate a fresh set of emojis & correct answer and update the message",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification clear-attempts",
+        "description": "Clear a user's verification attempts so they can retry",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "verification toggle",
+        "description": "Toggle the verification system in this server",
+        "permission": "ManageGuild"
+      }
+    ]
+  },
+  "guild": {
+    "icon": "🏛️",
+    "title": "Guild",
+    "commands": [
+      {
+        "name": "guild settings",
+        "description": "View current guild settings",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "guild language",
+        "description": "Change the bot language for this guild",
+        "permission": "ManageGuild"
+      },
+      {
+        "name": "guild broadcast-channel",
+        "description": "Set the channel where the bot sends broadcast messages",
+        "permission": "ManageGuild"
       }
     ]
   },
@@ -36,13 +97,23 @@
     "title": "Utility",
     "commands": [
       {
-        "name": "ping",
-        "description": "Check bot latency.",
+        "name": "donate",
+        "description": "Support Stachio via Ko-fi! 💚",
         "permission": "All"
       },
       {
         "name": "help",
-        "description": "Show help message.",
+        "description": "View Stachio's commands and key features",
+        "permission": "All"
+      },
+      {
+        "name": "invite",
+        "description": "Invite Stachio to your server!",
+        "permission": "All"
+      },
+      {
+        "name": "vote",
+        "description": "Support Stachio by upvoting us on bot lists!",
         "permission": "All"
       }
     ]
