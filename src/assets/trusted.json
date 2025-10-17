@@ -1,0 +1,36 @@
+{
+  "community_count": 76000,
+  "user_count": 100000,
+  "servers": [
+    {
+      "name": "Danske Gamers",
+      "icon": "https://avatars.githubusercontent.com/u/154371206?v=4",
+      "server_type": "partner",
+      "link": "https://discord.gg/danskegamers"
+    },
+    {
+      "name": "BetaSquad",
+      "icon": "https://avatars.githubusercontent.com/u/154371206?v=4",
+      "server_type": "verified",
+      "link": "https://discord.gg/betasquad"
+    },
+    {
+      "name": "GammaGuild",
+      "icon": "https://avatars.githubusercontent.com/u/154371206?v=4",
+      "server_type": "partner",
+      "link": "https://discord.gg/gammaguild"
+    },
+    {
+      "name": "DeltaCrew",
+      "icon": "https://avatars.githubusercontent.com/u/154371206?v=4",
+      "server_type": "none",
+      "link": "https://discord.gg/deltacrew"
+    },
+    {
+      "name": "EchoTeam",
+      "icon": "https://avatars.githubusercontent.com/u/154371206?v=4",
+      "server_type": "verified",
+      "link": "https://discord.gg/echoteam"
+    }
+  ]
+}

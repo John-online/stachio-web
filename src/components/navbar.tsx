@@ -44,7 +44,10 @@ export function Navbar() {
     setMobileMenuOpen((open) => !open);
   };
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleAnchorClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     if (href.startsWith("#")) {
       e.preventDefault();
       const anchorTarget = document.querySelector(href);
@@ -62,7 +65,6 @@ export function Navbar() {
       setMobileMenuOpen(false);
     }
   };
-
   return (
     <motion.nav
       className="fixed w-full top-0 z-50 border-b backdrop-blur-md"
@@ -73,16 +75,14 @@ export function Navbar() {
       }}
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 120, damping: 20 }}
-    >
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link href="/" className="flex items-center gap-2">
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.1 }}
-            >
+              transition={{ delay: 0.1 }}>
               <Image
                 src="/images/logo.png"
                 alt="Stachio Logo"
@@ -99,12 +99,10 @@ export function Navbar() {
               }}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-            >
+              transition={{ delay: 0.2 }}>
               Stachio
             </motion.span>
           </Link>
-
           <div className="hidden md:flex gap-8">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
@@ -114,7 +112,7 @@ export function Navbar() {
                   whileHover={{ scale: 1.08 }}
                   whileFocus={{ scale: 1.08 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={e => {
+                  onClick={(e) => {
                     if (link.href.startsWith("#")) {
                       e.preventDefault();
                       const anchorTarget = document.querySelector(link.href);
@@ -122,14 +120,14 @@ export function Navbar() {
                         const nav = document.querySelector("nav");
                         const navHeight = nav ? nav.clientHeight : 0;
                         const top =
-                          (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                          (anchorTarget as HTMLElement).getBoundingClientRect()
+                            .top +
                           window.scrollY -
                           navHeight;
                         window.scrollTo({ top, behavior: "smooth" });
                       }
                     }
-                  }}
-                >
+                  }}>
                   {link.label}
                 </motion.span>
               </Link>
@@ -137,9 +135,8 @@ export function Navbar() {
           </div>
 
           <Link href={inviteBtn.href} className="hidden md:block">
-            <motion.button
-              className="btn-primary cursor-pointer"
-            >
+            <motion.button className="btn-primary cursor-pointer">
+              {" "}
               {inviteBtn.label}
             </motion.button>
           </Link>
@@ -151,8 +148,7 @@ export function Navbar() {
             aria-label="Menu"
             whileTap={{ scale: 0.9 }}
             whileHover={{ scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 300 }}
-          >
+            transition={{ type: "spring", stiffness: 300 }}>
             {mobileMenuOpen ? (
               <X className="w-6 h-6" />
             ) : (
@@ -170,14 +166,13 @@ export function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              variants={menuVariants}
-            >
+              variants={menuVariants}>
               {navLinks.map((link) => (
                 <Link key={link.href} href={link.href}>
                   <motion.span
                     className="block navbar-link cursor-pointer"
                     style={{ color: "var(--navbar-link)" }}
-                    onClick={e => {
+                    onClick={(e) => {
                       if (link.href.startsWith("#")) {
                         e.preventDefault();
                         const anchorTarget = document.querySelector(link.href);
@@ -185,7 +180,9 @@ export function Navbar() {
                           const nav = document.querySelector("nav");
                           const navHeight = nav ? nav.clientHeight : 0;
                           const top =
-                            (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                            (
+                              anchorTarget as HTMLElement
+                            ).getBoundingClientRect().top +
                             window.scrollY -
                             navHeight;
                           window.scrollTo({ top, behavior: "smooth" });
@@ -193,8 +190,7 @@ export function Navbar() {
                       }
                       setMobileMenuOpen(false);
                     }}
-                    whileTap={{ scale: 0.97 }}
-                  >
+                    whileTap={{ scale: 0.97 }}>
                     {link.label}
                   </motion.span>
                 </Link>
@@ -204,8 +200,7 @@ export function Navbar() {
                   className="block navbar-link cursor-pointer"
                   style={{ color: "var(--navbar-link)" }}
                   onClick={() => setMobileMenuOpen(false)}
-                  whileTap={{ scale: 0.97 }}
-                >
+                  whileTap={{ scale: 0.97 }}>
                   {inviteBtn.label}
                 </motion.span>
               </Link>

@@ -4,10 +4,10 @@
 
 > Stachio only collects the minimum data necessary to provide core functionality. This may include:
 
-* Discord user IDs and server (guild) IDs
-* Role IDs and channel IDs
-* Moderation logs (e.g., warnings, bans, kicks)
-* Server configuration and settings
+- Discord user IDs and server (guild) IDs
+- Role IDs and channel IDs
+- Moderation logs (e.g., warnings, bans, kicks)
+- Server configuration and settings
 
 ## 2. How We Use Data
 
@@ -21,9 +21,9 @@
 
 > We take security seriously and use industry-standard measures to protect your data:
 
-* All sensitive data (IDs, configurations, logs) are encrypted at rest and in transit.
-* Database access is strictly restricted to authorized administrators.
-* Regular monitoring and audits help ensure system integrity.
+- All sensitive data (IDs, configurations, logs) are encrypted at rest and in transit.
+- Database access is strictly restricted to authorized administrators.
+- Regular monitoring and audits help ensure system integrity.
 
 ## 5. Your Rights
 

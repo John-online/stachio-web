@@ -12,10 +12,10 @@
 
 > You agree not to misuse Stachio in any way. Prohibited activities include but are not limited to:
 
-* Attempting to disrupt or overload Stachio’s services or infrastructure.
-* Using Stachio for illegal, harmful, or malicious activities.
-* Bypassing, disabling, or abusing safety or moderation features.
-* Exploiting bugs, loopholes, or vulnerabilities in Stachio.
+- Attempting to disrupt or overload Stachio’s services or infrastructure.
+- Using Stachio for illegal, harmful, or malicious activities.
+- Bypassing, disabling, or abusing safety or moderation features.
+- Exploiting bugs, loopholes, or vulnerabilities in Stachio.
 
 Violation of these rules may result in removal of the bot from your server and/or blacklisting.
 
