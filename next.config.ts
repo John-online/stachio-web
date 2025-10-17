@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   ],
   images: {
     domains: [
+      "stachio.dk",
       "cdn.discordapp.com",
       "github.com",
       "avatars.githubusercontent.com",
