@@ -1,8 +1,15 @@
 "use client";
 import { Navbar } from "@/components/navbar";
 import Image from "next/image";
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import testimonials from "@/assets/testimonials.json";
+import trusted from "@/assets/trusted.json";
 import {
   Shield,
   AlertTriangle,
@@ -11,9 +18,60 @@ import {
   FileStack,
   FileText,
   ChevronDown,
+  Search,
+  Lock,
 } from "lucide-react";
 import Link from "next/link";
 import Footer from "@/components/footer";
+import Partner from "@/assets/icons/partner";
+import Verified from "@/assets/icons/verified";
+
+const TrustedServer = React.memo(function TrustedServer({
+  server,
+}: {
+  server: (typeof trusted.servers)[0];
+}) {
+  const [imageError, setImageError] = useState(false);
+
+  return (
+    <div
+      className="flex-shrink-0 flex items-center p-6 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105 group min-w-[340px] max-h-[120px] cursor-pointer"
+      onClick={() => {
+        window.open(server.link, "_blank");
+      }}
+    >
+      <span className="relative flex shrink-0 overflow-hidden rounded-lg size-16">
+        <Image
+          src={imageError ? "/images/logo.png" : server.icon}
+          alt={server.name}
+          width={84}
+          height={84}
+          className="aspect-square h-full w-full"
+          onError={() => setImageError(true)}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+        />
+      </span>
+
+      <div className="ml-4 flex-1">
+        <div className="relative flex items-center">
+          {server.server_type == "partner" && (
+            <Partner width={24} height={24} />
+          )}
+
+          {server.server_type == "verified" && (
+            <Verified width={24} height={24} />
+          )}
+
+          <h4 className="ml-2 max-w-[160px] overflow-hidden text-ellipsis whitespace-nowrap text-lg text-foreground">
+            {server.name}
+          </h4>
+        </div>
+      </div>
+    </div>
+  );
+});
 
 type PartnerType = {
   name: string;
@@ -23,7 +81,11 @@ type PartnerType = {
   cta?: string;
 };
 
-const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: PartnerType }) {
+const PartnerCard = React.memo(function PartnerCard({
+  partner,
+}: {
+  partner: PartnerType;
+}) {
   const [imageError, setImageError] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -31,7 +93,7 @@ const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: Part
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" }
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -39,11 +101,19 @@ const PartnerCard = React.memo(function PartnerCard({ partner }: { partner: Part
   }, []);
 
   if (!isVisible) {
-    return <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl bg-white/10 p-6 flex flex-col items-center text-center h-64" />;
+    return (
+      <div
+        ref={ref}
+        className="feature-card rounded-2xl border border-white/10 shadow-xl bg-white/10 p-6 flex flex-col items-center text-center h-64"
+      />
+    );
   }
 
   return (
-    <div ref={ref} className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-transform duration-200 bg-white/10 hover:bg-white/15 p-6 flex flex-col items-center text-center">
+    <div
+      ref={ref}
+      className="feature-card rounded-2xl border border-white/10 shadow-xl hover:scale-[1.01] hover:shadow-lg transition-transform duration-200 bg-white/10 hover:bg-white/15 p-6 flex flex-col items-center text-center"
+    >
       <Image
         src={imageError ? "/images/logo.png" : partner.logo}
         alt={partner.name}
@@ -113,8 +183,9 @@ const CommandCategory = React.memo(function CommandCategory({
           <span className="text-white">{category.title}</span>
         </div>
         <ChevronDown
-          className={`w-6 h-6 text-white/70 transform transition-transform duration-200 ${open ? "rotate-180" : ""
-            }`}
+          className={`w-6 h-6 text-white/70 transform transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
         />
       </button>
       <div
@@ -158,10 +229,15 @@ const TestimonialCard = React.memo(function TestimonialCard({
 
   return (
     <div
-      className={`feature-card rounded-2xl border border-white/10 shadow-xl transition-all duration-500 bg-white/10 p-8 w-full max-w-2xl mx-auto ${isActive ? 'opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15' : 'opacity-60 scale-95'
-        }`}
+      className={`feature-card rounded-2xl border border-white/10 shadow-xl transition-all duration-500 bg-white/10 p-8 w-full max-w-2xl mx-auto ${
+        isActive
+          ? "opacity-100 scale-100 hover:scale-[1.02] hover:shadow-lg hover:bg-white/15"
+          : "opacity-60 scale-95"
+      }`}
     >
-      <p className="text-white/90 text-lg mb-6 leading-relaxed">{testimonial.text}</p>
+      <p className="text-white/90 text-lg mb-6 leading-relaxed">
+        {testimonial.text}
+      </p>
       <div className="flex items-center gap-4">
         <Image
           src={imageError ? "/images/logo.png" : testimonial.user.avatar}
@@ -175,7 +251,9 @@ const TestimonialCard = React.memo(function TestimonialCard({
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
         />
         <div className="text-left">
-          <h4 className="text-xl font-bold text-white">{testimonial.user.name}</h4>
+          <h4 className="text-xl font-bold text-white">
+            {testimonial.user.name}
+          </h4>
           <p className="text-sm text-white/70">{testimonial.user.role}</p>
         </div>
       </div>
@@ -184,7 +262,6 @@ const TestimonialCard = React.memo(function TestimonialCard({
 });
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false);
   const [openCategories, setOpenCategories] = useState<{
     [key: string]: boolean;
   }>({});
@@ -232,19 +309,12 @@ export default function Home() {
     setOpenCategories((prev) => ({ ...prev, [key]: !prev[key] }));
   }, []);
 
-  const updateLoadingProgress = useCallback((key: keyof typeof loadingProgress, value: boolean) => {
-    setLoadingProgress(prev => ({ ...prev, [key]: value }));
-  }, []);
-
-  const checkAllLoaded = useCallback(() => {
-    return Object.values(loadingProgress).every(Boolean);
-  }, [loadingProgress]);
-
-  useEffect(() => {
-    if (checkAllLoaded()) {
-      setShowContent(true);
-    }
-  }, [loadingProgress, checkAllLoaded]);
+  const updateLoadingProgress = useCallback(
+    (key: keyof typeof loadingProgress, value: boolean) => {
+      setLoadingProgress((prev) => ({ ...prev, [key]: value }));
+    },
+    []
+  );
 
   const fetchGithubStats = useCallback(async () => {
     try {
@@ -256,8 +326,8 @@ export default function Home() {
         stars: data.stargazers_count,
         forks: data.forks_count,
       });
-    } catch { }
-    updateLoadingProgress('githubStats', true);
+    } catch {}
+    updateLoadingProgress("githubStats", true);
   }, [updateLoadingProgress]);
 
   const fetchDiscordStats = useCallback(async () => {
@@ -270,8 +340,8 @@ export default function Home() {
         online: data.presence_count,
         members: data.members.length,
       });
-    } catch { }
-    updateLoadingProgress('discordStats', true);
+    } catch {}
+    updateLoadingProgress("discordStats", true);
   }, [updateLoadingProgress]);
 
   useEffect(() => {
@@ -290,41 +360,41 @@ export default function Home() {
     Promise.all([
       import("@/assets/features.json"),
       import("@/assets/partners.json"),
-      import("@/assets/commands.json")
+      import("@/assets/commands.json"),
     ]).then(([featuresModule, partnersModule, commandsModule]) => {
       setFeatures(featuresModule.default || []);
-      updateLoadingProgress('features', true);
+      updateLoadingProgress("features", true);
 
       setPartners(partnersModule.default || []);
-      updateLoadingProgress('partners', true);
+      updateLoadingProgress("partners", true);
 
       setCommands(commandsModule.default || {});
-      updateLoadingProgress('commands', true);
+      updateLoadingProgress("commands", true);
     });
   }, [updateLoadingProgress]);
 
   // Preload critical images
   useEffect(() => {
     const imagesToPreload = [
-      '/images/logo.png',
-      ...partners.map(p => p.logo),
-      ...testimonials.map(t => t.user.avatar)
+      "/images/logo.png",
+      ...partners.map((p) => p.logo),
+      ...testimonials.map((t) => t.user.avatar),
     ];
 
     let loadedCount = 0;
     const totalImages = imagesToPreload.length;
 
     if (totalImages === 0) {
-      updateLoadingProgress('images', true);
+      updateLoadingProgress("images", true);
       return;
     }
 
-    imagesToPreload.forEach(src => {
+    imagesToPreload.forEach((src) => {
       const img = new window.Image();
       img.onload = img.onerror = () => {
         loadedCount++;
         if (loadedCount === totalImages) {
-          updateLoadingProgress('images', true);
+          updateLoadingProgress("images", true);
         }
       };
       img.src = src;
@@ -342,9 +412,11 @@ export default function Home() {
   }, [isScrolling]);
 
   useEffect(() => {
-    window.addEventListener('scroll', throttledScrollHandler, { passive: true });
+    window.addEventListener("scroll", throttledScrollHandler, {
+      passive: true,
+    });
     return () => {
-      window.removeEventListener('scroll', throttledScrollHandler);
+      window.removeEventListener("scroll", throttledScrollHandler);
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
   }, [throttledScrollHandler]);
@@ -372,7 +444,7 @@ export default function Home() {
 
         window.scrollTo({
           top,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     }
@@ -400,43 +472,50 @@ export default function Home() {
   }, [testimonialIndex, testimonialCount, testimonialsPaused]);
 
   const dragStartX = useRef<number | null>(null);
-  const handleDragStart = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    setTestimonialsPaused(true);
-    dragStartX.current =
-      "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
-  }, []);
+  const handleDragStart = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      setTestimonialsPaused(true);
+      dragStartX.current =
+        "touches" in e ? e.touches[0].clientX : (e as React.MouseEvent).clientX;
+    },
+    []
+  );
 
-  const handleDragEnd = useCallback((e: React.TouchEvent | React.MouseEvent) => {
-    if (dragStartX.current === null) return;
-    const endX =
-      "changedTouches" in e
-        ? e.changedTouches[0].clientX
-        : (e as React.MouseEvent).clientX;
-    const diff = endX - dragStartX.current;
-    if (Math.abs(diff) > 50) {
-      setTestimonialIndex((prev) =>
-        diff > 0
-          ? (prev - 1 + testimonialCount) % testimonialCount
-          : (prev + 1) % testimonialCount
-      );
-    }
-    dragStartX.current = null;
-    setTimeout(() => setTestimonialsPaused(false), 1000);
-  }, [testimonialCount]);
+  const handleDragEnd = useCallback(
+    (e: React.TouchEvent | React.MouseEvent) => {
+      if (dragStartX.current === null) return;
+      const endX =
+        "changedTouches" in e
+          ? e.changedTouches[0].clientX
+          : (e as React.MouseEvent).clientX;
+      const diff = endX - dragStartX.current;
+      if (Math.abs(diff) > 50) {
+        setTestimonialIndex((prev) =>
+          diff > 0
+            ? (prev - 1 + testimonialCount) % testimonialCount
+            : (prev + 1) % testimonialCount
+        );
+      }
+      dragStartX.current = null;
+      setTimeout(() => setTestimonialsPaused(false), 1000);
+    },
+    [testimonialCount]
+  );
 
-  const lucideIconMap: Record<string, React.ElementType> = useMemo(() => ({
-    shield: Shield,
-    warning: AlertTriangle,
-    "file-drawer": Archive,
-    archive: Archive,
-    "file-archive": FileArchive,
-    "file-stack": FileStack,
-    "file-text": FileText,
-  }), []);
-
-  const handleLoadingComplete = useCallback(() => {
-    setShowContent(true);
-  }, []);
+  const lucideIconMap: Record<string, React.ElementType> = useMemo(
+    () => ({
+      shield: Shield,
+      search: Search,
+      warning: AlertTriangle,
+      "file-drawer": Archive,
+      archive: Archive,
+      "file-archive": FileArchive,
+      "file-stack": FileStack,
+      "file-text": FileText,
+      lock: Lock,
+    }),
+    []
+  );
 
   return (
     <>
@@ -462,16 +541,10 @@ export default function Home() {
               secure community management.
             </p>
             <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start w-full">
-              <Link
-                href="/invite"
-                className="btn-primary"
-              >
+              <Link href="/invite" className="btn-primary">
                 Add to Discord
               </Link>
-              <Link
-                href="#commands"
-                className="btn-primary"
-              >
+              <Link href="#commands" className="btn-primary">
                 View Commands
               </Link>
             </div>
@@ -492,6 +565,39 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="trusted" className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-4xl font-bold mb-4">
+            Trusted by{" "}
+            <span className="text-[#aac49b]">
+              {trusted.community_count.toLocaleString()}+
+            </span>{" "}
+            Communities
+          </h2>
+          <p className="text-lg text-white/70 mb-4">
+            Protecting over{" "}
+            <span className="text-[#aac49b] font-semibold">
+              {trusted.user_count.toLocaleString()}
+            </span>{" "}
+            users across Discord
+          </p>
+
+          <div className="relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[var(--background)] to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[var(--background)] to-transparent z-10 pointer-events-none"></div>
+
+            <div className="flex gap-6 py-8 animate-scroll">
+              {trusted.servers.map((server, index) => (
+                <TrustedServer key={`first-${index}`} server={server} />
+              ))}
+              {trusted.servers.map((server, index) => (
+                <TrustedServer key={`second-${index}`} server={server} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="features" className="py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl font-bold mb-4">Features of Stachio</h2>
@@ -503,8 +609,9 @@ export default function Home() {
               memoizedFeatures.map((feature, idx) => (
                 <div
                   key={feature.title || idx}
-                  className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${isScrolling ? '' : 'hover:scale-[1.01] hover:shadow-lg'
-                    }`}
+                  className={`feature-card p-0 rounded-2xl border border-white/10 shadow-xl transition-all duration-200 group ${
+                    isScrolling ? "" : "hover:scale-[1.01] hover:shadow-lg"
+                  }`}
                   style={{
                     background: feature.bgGradient || undefined,
                   }}
@@ -518,10 +625,10 @@ export default function Home() {
                     >
                       {feature.iconName && lucideIconMap[feature.iconName]
                         ? React.createElement(lucideIconMap[feature.iconName], {
-                          color: feature.iconColour || "#fff",
-                          size: 28,
-                          strokeWidth: 2.2,
-                        })
+                            color: feature.iconColour || "#fff",
+                            size: 28,
+                            strokeWidth: 2.2,
+                          })
                         : feature.iconEmoji || null}
                     </div>
                     <h3 className="text-2xl font-bold mb-3 text-white group-hover:text-[#aac49b] transition-colors duration-200">
@@ -574,10 +681,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        id="testimonials"
-        className="py-32"
-      >
+      <section id="testimonials" className="py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-5xl font-bold mb-4">What Our Users Say</h2>
           <p className="text-xl text-white/70 mb-20">
@@ -599,10 +703,7 @@ export default function Home() {
                 }}
               >
                 {testimonials.map((testimonial, i) => (
-                  <div
-                    key={i}
-                    className="w-full flex-shrink-0 px-4"
-                  >
+                  <div key={i} className="w-full flex-shrink-0 px-4">
                     <TestimonialCard
                       testimonial={testimonial}
                       isActive={testimonialIndex === i}
@@ -616,10 +717,11 @@ export default function Home() {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${testimonialIndex === i
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    testimonialIndex === i
                       ? "bg-[#aac49b] scale-125"
                       : "bg-white/30 hover:bg-[#aac49b]/60 hover:scale-110"
-                    }`}
+                  }`}
                   aria-label={`Go to testimonial ${i + 1}`}
                   onClick={() => {
                     setTestimonialIndex(i);
@@ -647,7 +749,8 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3">Source Code</h3>
                 <p className="text-white/70 mb-6">
-                  View our open-source code on GitHub and contribute to development
+                  View our open-source code on GitHub and contribute to
+                  development
                 </p>
                 <div className="flex gap-6 text-white/70 text-sm mb-6">
                   <span className="flex items-center gap-2">
@@ -659,10 +762,7 @@ export default function Home() {
                     <span id="forks-count">{githubStats.forks} Forks</span>
                   </span>
                 </div>
-                <Link
-                  href="/github"
-                  className="btn-primary"
-                >
+                <Link href="/github" className="btn-primary">
                   View Source
                 </Link>
               </div>
@@ -685,17 +785,18 @@ export default function Home() {
                 <div className="flex gap-6 text-white/70 text-sm mb-6">
                   <span className="flex items-center gap-2">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                    <span id="discord-online-count">{discordStats.online} Online</span>
+                    <span id="discord-online-count">
+                      {discordStats.online} Online
+                    </span>
                   </span>
                   <span className="flex items-center gap-2">
                     <span className="text-blue-400">👥</span>
-                    <span id="discord-members">{discordStats.members} Members</span>
+                    <span id="discord-members">
+                      {discordStats.members} Members
+                    </span>
                   </span>
                 </div>
-                <Link
-                  href="/discord"
-                  className="btn-primary"
-                >
+                <Link href="/discord" className="btn-primary">
                   Join Server
                 </Link>
               </div>

@@ -44,7 +44,10 @@ export function Navbar() {
     setMobileMenuOpen((open) => !open);
   };
 
-  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleAnchorClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
     if (href.startsWith("#")) {
       e.preventDefault();
       const anchorTarget = document.querySelector(href);
@@ -114,7 +117,7 @@ export function Navbar() {
                   whileHover={{ scale: 1.08 }}
                   whileFocus={{ scale: 1.08 }}
                   whileTap={{ scale: 0.97 }}
-                  onClick={e => {
+                  onClick={(e) => {
                     if (link.href.startsWith("#")) {
                       e.preventDefault();
                       const anchorTarget = document.querySelector(link.href);
@@ -122,7 +125,8 @@ export function Navbar() {
                         const nav = document.querySelector("nav");
                         const navHeight = nav ? nav.clientHeight : 0;
                         const top =
-                          (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                          (anchorTarget as HTMLElement).getBoundingClientRect()
+                            .top +
                           window.scrollY -
                           navHeight;
                         window.scrollTo({ top, behavior: "smooth" });
@@ -137,9 +141,7 @@ export function Navbar() {
           </div>
 
           <Link href={inviteBtn.href} className="hidden md:block">
-            <motion.button
-              className="btn-primary cursor-pointer"
-            >
+            <motion.button className="btn-primary cursor-pointer">
               {inviteBtn.label}
             </motion.button>
           </Link>
@@ -177,7 +179,7 @@ export function Navbar() {
                   <motion.span
                     className="block navbar-link cursor-pointer"
                     style={{ color: "var(--navbar-link)" }}
-                    onClick={e => {
+                    onClick={(e) => {
                       if (link.href.startsWith("#")) {
                         e.preventDefault();
                         const anchorTarget = document.querySelector(link.href);
@@ -185,7 +187,9 @@ export function Navbar() {
                           const nav = document.querySelector("nav");
                           const navHeight = nav ? nav.clientHeight : 0;
                           const top =
-                            (anchorTarget as HTMLElement).getBoundingClientRect().top +
+                            (
+                              anchorTarget as HTMLElement
+                            ).getBoundingClientRect().top +
                             window.scrollY -
                             navHeight;
                           window.scrollTo({ top, behavior: "smooth" });
