@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ClientLayout } from "./client-layout";
@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://stachio.dk"),
   title: "Stachio - Advanced Discord Safety Bot",
   description:
     "Stachio is an advanced Discord bot focused on safety and security, featuring anti-phishing, automod, content filtering, moderation tools, logging, and more to protect your community.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
   openGraph: {
     type: "website",
     title:
@@ -28,12 +28,36 @@ export const metadata: Metadata = {
       "Protect your server with advanced moderation, automod, and anti-phishing tools.",
     images: ["/images/logo.png"],
   },
+  authors: [
+    { name: "Stachio", url: "https://stachio.dk" },
+    { name: "John", url: "https://github.com/John-online" },
+  ],
+  creator: "John-online",
+  publisher: "Stachio",
+  applicationName: "Stachio",
+  keywords: [
+    "Discord Bot",
+    "Moderation",
+    "Automod",
+    "Anti-Phishing",
+    "Content Filtering",
+    "Safety",
+    "Security",
+    "Community Protection",
+    "Discord Safety Bot",
+  ],
   twitter: {
     card: "summary_large_image",
     title: "Stachio - Protect Your Discord Community",
     description: "Advanced safety & moderation bot for Discord.",
     images: ["/images/logo.png"],
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
