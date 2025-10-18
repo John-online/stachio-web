@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "cdn.discordapp.com",
       "github.com",
       "avatars.githubusercontent.com",
+      "stachio.dk",
     ],
   },
 };
