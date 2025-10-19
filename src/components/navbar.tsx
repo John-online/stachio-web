@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/#features", label: "Features" },
   { href: "/#commands", label: "Commands" },
   { href: "/#testimonials", label: "Testimonials" },
+  { href: "/docs", label: "Docs" },
 ];
 
 const inviteBtn = {

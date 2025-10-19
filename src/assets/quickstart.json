@@ -1,0 +1,22 @@
+[
+  {
+    "step": 1,
+    "title": "Invite Stachio",
+    "description": "Add Stachio to your Discord server with the required permissions."
+  },
+  {
+    "step": 2,
+    "title": "Basic Setup",
+    "description": "Configure essential settings like moderation channels and roles."
+  },
+  {
+    "step": 3,
+    "title": "Customize Features",
+    "description": "Enable and configure the features that best fit your community."
+  },
+  {
+    "step": 4,
+    "title": "Test & Go Live",
+    "description": "Test your configuration and start protecting your server."
+  }
+]
