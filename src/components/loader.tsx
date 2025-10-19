@@ -34,6 +34,14 @@ export function Loader({ isLoading, onLoadingComplete }: LoaderProps) {
 
       <div className="relative mb-12">
         <div className="absolute inset-0 w-32 h-32 bg-[#aac49b]/20 rounded-full blur-xl animate-pulse"></div>
+        <Image
+          src="/images/logo.png"
+          alt="Stachio Loading"
+          width={128}
+          height={128}
+          className="relative w-32 h-32 rounded-2xl animate-bounce"
+          priority
+        />
       </div>
 
       <span className="text-white/70 text-lg font-medium">Loading...</span>

@@ -65,6 +65,7 @@ export function Navbar() {
       setMobileMenuOpen(false);
     }
   };
+
   return (
     <motion.nav
       className="fixed w-full top-0 z-50 border-b backdrop-blur-md"
@@ -103,6 +104,7 @@ export function Navbar() {
               Stachio
             </motion.span>
           </Link>
+
           <div className="hidden md:flex gap-8">
             {navLinks.map((link) => (
               <Link key={link.href} href={link.href}>
@@ -136,7 +138,6 @@ export function Navbar() {
 
           <Link href={inviteBtn.href} className="hidden md:block">
             <motion.button className="btn-primary cursor-pointer">
-              {" "}
               {inviteBtn.label}
             </motion.button>
           </Link>

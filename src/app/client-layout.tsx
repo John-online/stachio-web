@@ -19,18 +19,13 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {" "}
-      <Loader
-        isLoading={isLoading}
-        onLoadingComplete={handleLoadingComplete}
-      />{" "}
+      <Loader isLoading={isLoading} onLoadingComplete={handleLoadingComplete} />
       <div
         className={`transition-opacity duration-500 ${
           showContent ? "opacity-100" : "opacity-0"
         }`}>
-        {" "}
-        {children}{" "}
-      </div>{" "}
+        {children}
+      </div>
     </>
   );
 }

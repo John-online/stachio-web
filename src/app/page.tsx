@@ -254,7 +254,6 @@ const TestimonialCard = React.memo(function TestimonialCard({
 });
 
 export default function Home() {
-  const [showContent, setShowContent] = useState(false);
   const [openCategories, setOpenCategories] = useState<{
     [key: string]: boolean;
   }>({});
@@ -308,16 +307,6 @@ export default function Home() {
     },
     []
   );
-
-  const checkAllLoaded = useCallback(() => {
-    return Object.values(loadingProgress).every(Boolean);
-  }, [loadingProgress]);
-
-  useEffect(() => {
-    if (checkAllLoaded()) {
-      setShowContent(true);
-    }
-  }, [loadingProgress, checkAllLoaded]);
 
   const fetchGithubStats = useCallback(async () => {
     try {
@@ -519,10 +508,6 @@ export default function Home() {
     }),
     []
   );
-
-  const handleLoadingComplete = useCallback(() => {
-    setShowContent(true);
-  }, []);
 
   return (
     <>
