@@ -178,29 +178,6 @@ body {
   font-size: 0.95em;
 }
 
-@keyframes scroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-scroll {
-  animation: scroll 45s linear infinite;
-}
-
-.animate-scroll:hover {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-scroll {
-    animation: none;
-  }
-}
-
 .docs-sidebar-scrollbar::-webkit-scrollbar {
   width: 6px;
 }
