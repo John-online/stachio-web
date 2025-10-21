@@ -1,201 +1,109 @@
-"use client";
-import { Navbar } from "@/components/navbar";
-import React from "react";
-import {
-  Book,
-  FileText,
-  Shield,
-  Settings,
-  Users,
-  AlertTriangle,
-  ArrowLeft,
-  Calendar,
-  User,
-} from "lucide-react";
+import { ChevronRight, FileText } from "lucide-react";
 import Link from "next/link";
-import Footer from "@/components/footer";
-
-// Utility function to format category names
-const formatCategoryName = (category: string): string => {
-  return category
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-};
-
-// Icon mapping for categories
-const getCategoryIcon = (category: string) => {
-  const iconMap: { [key: string]: React.ElementType } = {
-    blacklist: Shield,
-    "getting-started": Book,
-    commands: FileText,
-    moderation: Shield,
-    configuration: Settings,
-    users: Users,
-    troubleshooting: AlertTriangle,
-  };
-  return iconMap[category] || FileText;
-};
+import { getIconComponent, formatCategoryName } from "@/lib/icon-utils";
+import { MarkdownRenderer } from "@/components/markdown-renderer";
+import { getCategory } from "@/lib/docs-utils";
+import path from "path";
+import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     category: string;
-  };
+  }>;
 }
 
-interface DocFile {
-  content: string;
-  metadata: Record<string, string>;
-  filename: string;
-  category: string;
-}
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { category } = await params;
+  const docsPath = path.join(process.cwd(), "src", "assets", "docs");
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const [docContent, setDocContent] = React.useState<DocFile | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState<string | null>(null);
+  const categoryData = getCategory(docsPath, category, true);
 
-  const { category } = params;
+  if (!categoryData) {
+    notFound();
+  }
+
   const formattedCategory = formatCategoryName(category);
-  const CategoryIcon = getCategoryIcon(category);
-
-  React.useEffect(() => {
-    const fetchCategoryContent = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(
-          `http://localhost:3000/api/docs/getCategory?category=${encodeURIComponent(
-            category
-          )}`
-        );
-        const data = await response.json();
-
-        if (data.success && data.content) {
-          setDocContent({
-            content: data.content,
-            metadata: data.metadata || {},
-            filename: data.filename || category,
-            category: data.category || category,
-          });
-        } else {
-          setError("Category not found or no content available");
-        }
-      } catch (err) {
-        console.error("Error fetching category content:", err);
-        setError("Failed to load category content");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategoryContent();
-  }, [category]);
-
-  if (loading) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div className="text-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#aac49b] mx-auto"></div>
-              <p className="text-white/70 mt-4">Loading documentation...</p>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
-
-  if (error || !docContent) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <div className="text-center py-20">
-              <h1 className="text-4xl font-bold text-white mb-4">
-                Category Not Found
-              </h1>
-              <p className="text-white/70 mb-8">
-                {error ||
-                  "The requested documentation category does not exist."}
-              </p>
-              <Link href="/docs" className="btn-primary">
-                <ArrowLeft size={20} className="mr-2" />
-                Back to Documentation
-              </Link>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+  const CategoryIcon = getIconComponent(categoryData.icon || "FileText");
 
   return (
-    <>
-      <Navbar />
+    <div className="max-w-4xl mx-auto px-6 lg:px-12 py-12 lg:py-16">
+      <nav className="flex items-center space-x-2 text-sm text-white/60 mb-8">
+        <Link href="/docs" className="hover:text-white">
+          Documentation
+        </Link>
+        <ChevronRight size={16} />
+        <span className="text-white font-medium">{formattedCategory}</span>
+      </nav>
 
-      {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]">
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)] opacity-20"></div>
-        </div>
-        <div className="relative z-10 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-16">
-          <div className="w-16 h-16 bg-gradient-to-br from-[#aac49b] to-[#8ab087] rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <CategoryIcon size={32} className="text-[#1a1f17]" />
+      <div className="mb-8 border-b border-white/10 pb-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-14 h-14 bg-gradient-to-br from-[#aac49b] to-[#8ab087] rounded-xl flex items-center justify-center">
+            <CategoryIcon size={28} className="text-[#1a1f17]" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-[var(--hero-text)] leading-tight drop-shadow-lg mb-4">
+          <h1 className="text-4xl lg:text-5xl font-bold text-white">
             {formattedCategory}
           </h1>
-          <p className="text-lg md:text-xl text-[var(--hero-text-muted)] max-w-2xl mx-auto mb-6">
+        </div>
+        {categoryData.description && (
+          <p className="text-lg text-white/70">{categoryData.description}</p>
+        )}
+        {!categoryData.description && (
+          <p className="text-lg text-white/70">
             Documentation for {formattedCategory.toLowerCase()}
           </p>
-          <Link
-            href="/docs"
-            className="inline-flex items-center text-[#aac49b] hover:text-white transition-colors duration-200"
-          >
-            <ArrowLeft size={20} className="mr-2" />
-            Back to All Documentation
-          </Link>
+        )}
+      </div>
+
+      {categoryData.parentFile ? (
+        <div className="mb-8">
+          <MarkdownRenderer content={categoryData.parentFile.content} />
         </div>
-      </section>
+      ) : (
+        <div className="mb-8">
+          <p className="text-white/70">
+            This category contains {categoryData.files.length} document
+            {categoryData.files.length !== 1 ? "s" : ""}. Select a document from
+            the sidebar to view its content.
+          </p>
+        </div>
+      )}
 
-      {/* Content Section */}
-      <section className="py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white/5 rounded-2xl border border-white/10 shadow-xl p-8">
-            {/* File Info */}
-            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-white/10">
-              <div className="flex items-center gap-2 text-white/70">
-                <User size={16} />
-                <span className="text-sm">{docContent.filename}</span>
-              </div>
-              {docContent.metadata.lastModified && (
-                <div className="flex items-center gap-2 text-white/70">
-                  <Calendar size={16} />
-                  <span className="text-sm">
-                    Last updated:{" "}
-                    {new Date(
-                      docContent.metadata.lastModified
-                    ).toLocaleDateString()}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Markdown Content */}
-            <div
-              className="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-white/90 prose-strong:text-white prose-code:text-[#aac49b] prose-code:bg-white/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-pre:bg-white/10 prose-pre:border prose-pre:border-white/20"
-              dangerouslySetInnerHTML={{ __html: docContent.content }}
-            />
+      {categoryData.files.length > 0 && (
+        <div className="mt-12 border-t border-white/10 pt-8">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            More documents in this category
+          </h2>
+          <div className="grid gap-4">
+            {categoryData.files
+              .filter((file) => !file.isParent)
+              .map((file) => (
+                <Link
+                  key={file.fileName}
+                  href={`/docs/${category}/${file.fileName
+                    .replace(".md", "")
+                    .replace(/\s+/g, "-")}`}
+                  className="block p-6 bg-white/5 border border-white/10 rounded-lg hover:border-[#aac49b] hover:shadow-md hover:bg-white/10 transition-all duration-200"
+                >
+                  <div className="flex items-start gap-4">
+                    <FileText
+                      size={24}
+                      className="text-[#aac49b] flex-shrink-0 mt-1"
+                    />
+                    <div>
+                      <h3 className="text-lg font-bold text-white mb-2">
+                        {file.name}
+                      </h3>
+                      <div className="flex items-center text-sm text-white/70">
+                        <ChevronRight size={16} className="mr-1" />
+                        <span>Read more</span>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
           </div>
         </div>
-      </section>
-
-      <Footer />
-    </>
+      )}
+    </div>
   );
 }

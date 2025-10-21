@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
       "stachio.dk",
     ],
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

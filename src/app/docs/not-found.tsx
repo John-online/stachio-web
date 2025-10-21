@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/navbar";
 import Footer from "@/components/footer";
 import Link from "next/link";
 import { ArrowLeft, Home, FileText } from "lucide-react";
@@ -6,7 +5,6 @@ import { ArrowLeft, Home, FileText } from "lucide-react";
 export default function DocsNotFound() {
   return (
     <>
-      <Navbar />
       <div className="min-h-screen bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center py-20">
@@ -21,11 +19,17 @@ export default function DocsNotFound() {
               It may have been moved, renamed, or deleted.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/docs" className="btn-primary">
+              <Link
+                href="/docs"
+                className="btn-primary flex items-center justify-center"
+              >
                 <Home size={20} className="mr-2" />
                 All Documentation
               </Link>
-              <Link href="/" className="btn-secondary">
+              <Link
+                href="/"
+                className="btn-secondary flex items-center justify-center"
+              >
                 <ArrowLeft size={20} className="mr-2" />
                 Back to Home
               </Link>

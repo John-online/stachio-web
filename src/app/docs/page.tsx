@@ -1,71 +1,23 @@
 "use client";
-import { Navbar } from "@/components/navbar";
 import React from "react";
-import {
-  Book,
-  FileText,
-  Shield,
-  Settings,
-  Users,
-  AlertTriangle,
-  ChevronRight,
-  Search,
-} from "lucide-react";
+import { Book, ChevronRight, Search } from "lucide-react";
 import Link from "next/link";
 import Footer from "@/components/footer";
 import quickStartSteps from "@/assets/quickstart.json";
-
-// Utility function to format category names
-const formatCategoryName = (category: string): string => {
-  return category
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
-};
-
-// Icon mapping for categories
-const getCategoryIcon = (category: string) => {
-  const iconMap: { [key: string]: React.ElementType } = {
-    blacklist: Shield,
-    "getting-started": Book,
-    commands: FileText,
-    moderation: Shield,
-    configuration: Settings,
-    users: Users,
-    troubleshooting: AlertTriangle,
-  };
-  return iconMap[category] || FileText;
-};
-
-const getCategoryType = (category: string): string => {
-  const categoryMap: { [key: string]: string } = {
-    blacklist: "Features",
-    "getting-started": "Setup",
-    commands: "Reference",
-    moderation: "Features",
-    configuration: "Setup",
-    users: "Features",
-    troubleshooting: "Help",
-  };
-  return categoryMap[category] || "Reference";
-};
-
-const getCategoryDescription = (category: string): string => {
-  return `Documentation for ${formatCategoryName(category).toLowerCase()}.`;
-};
+import { getIconComponent, formatCategoryName } from "@/lib/icon-utils";
 
 const DocCard = React.memo(function DocCard({
   title,
   description,
   href,
   icon: Icon,
-  category,
+  fileCount,
 }: {
   title: string;
   description: string;
   href: string;
   icon: React.ElementType;
-  category: string;
+  fileCount: number;
 }) {
   return (
     <Link
@@ -77,19 +29,19 @@ const DocCard = React.memo(function DocCard({
           <Icon size={24} />
         </div>
         <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-xs px-2 py-1 bg-[#aac49b]/20 text-[#aac49b] rounded-md font-medium">
-              {category}
-            </span>
-          </div>
           <h3 className="text-xl font-bold mb-2 text-white group-hover:text-[#aac49b] transition-colors duration-200">
             {title}
           </h3>
           <p className="text-white/70 text-sm leading-relaxed mb-3">
             {description}
           </p>
-          <div className="flex items-center text-[#aac49b] text-sm font-medium">
-            Read more <ChevronRight size={16} className="ml-1" />
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-white/50">
+              {fileCount} {fileCount === 1 ? "document" : "documents"}
+            </span>
+            <div className="flex items-center text-[#aac49b] text-sm font-medium">
+              Read more <ChevronRight size={16} className="ml-1" />
+            </div>
           </div>
         </div>
       </div>
@@ -126,7 +78,7 @@ interface DocCategory {
   description: string;
   href: string;
   icon: React.ElementType;
-  category: string;
+  fileCount: number;
 }
 
 export default function DocsPage() {
@@ -138,19 +90,24 @@ export default function DocsPage() {
     const fetchCategories = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "http://localhost:3000/api/docs/getCategories"
-        );
+        const response = await fetch("/api/docs/getCategories");
         const data = await response.json();
 
         if (data.success && data.categories) {
           const formattedCategories = data.categories.map(
-            (category: string) => ({
-              title: formatCategoryName(category),
-              description: getCategoryDescription(category),
-              href: `/docs/${category}`,
-              icon: getCategoryIcon(category),
-              category: getCategoryType(category),
+            (category: {
+              name: string;
+              icon: string;
+              hasParent: boolean;
+              fileCount: number;
+            }) => ({
+              title: formatCategoryName(category.name),
+              description: `Explore ${formatCategoryName(
+                category.name
+              ).toLowerCase()} documentation.`,
+              href: `/docs/${category.name}`,
+              icon: getIconComponent(category.icon),
+              fileCount: category.fileCount,
             })
           );
           setDocCategories(formattedCategories);
@@ -170,9 +127,6 @@ export default function DocsPage() {
 
   return (
     <>
-      <Navbar />
-
-      {/* Hero Section */}
       <section
         id="docs-hero"
         className="relative min-h-[60vh] flex items-center justify-center overflow-hidden bg-gradient-to-b from-[var(--hero-gradient-from)] via-[var(--hero-gradient-via)] to-[var(--hero-gradient-to)]"
@@ -206,7 +160,6 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* Quick Start Section */}
       <section id="quick-start" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -233,7 +186,6 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* Documentation Categories */}
       <section id="documentation" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -266,7 +218,7 @@ export default function DocsPage() {
                   description={doc.description}
                   href={doc.href}
                   icon={doc.icon}
-                  category={doc.category}
+                  fileCount={doc.fileCount}
                 />
               ))}
             </div>
@@ -274,7 +226,6 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* Search Section */}
       <section id="search" className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-4">Search Documentation</h2>
@@ -300,7 +251,6 @@ export default function DocsPage() {
         </div>
       </section>
 
-      {/* Help Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-4">Need More Help?</h2>

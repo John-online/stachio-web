@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
       headers: { "Content-Type": contentType },
     });
   } catch (err) {
+    console.error("Error retrieving file:", err);
     return new Response("Not found", { status: 404 });
   }
 }

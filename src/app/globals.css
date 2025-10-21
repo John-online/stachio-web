@@ -200,3 +200,20 @@ body {
     animation: none;
   }
 }
+
+.docs-sidebar-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.docs-sidebar-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.docs-sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: #aac49b;
+  border-radius: 3px;
+}
+
+.docs-sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #8ab087;
+}
