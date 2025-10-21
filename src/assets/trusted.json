@@ -13,6 +13,18 @@
       "icon": "https://stachio.dk/images/bedrocksmp.png",
       "server_type": "",
       "link": "https://discord.gg/MyD3RFWqxZ"
+    },
+    {
+      "name": "StyleHub",
+      "icon": "https://stachio.dk/images/stylehub.png",
+      "server_type": "",
+      "link": "https://discord.gg/R9gBkSuWCn"
+    },
+    {
+      "name": "IDGames.dk",
+      "icon": "https://stachio.dk/images/idgames.png",
+      "server_type": "",
+      "link": "https://discord.gg/9dJdP6R468"
     }
   ]
 }
